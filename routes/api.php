@@ -17,18 +17,15 @@ use App\Http\Controllers\Auth\RegisterController;
 */
 
 Route::group([
-
     'middleware' => 'api',
     'prefix' => 'auth'
-
 ], function ($router) {
-
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
-
+    Route::post('register' , [AuthController::class, 'register'])->name('user.register');;
+    Route::post('login', [AuthController::class, 'login'])->name('user.login');;
+    Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');;
+    Route::post('refresh', [AuthController::class, 'refresh'])->name('user.refresh');;
+    Route::post('authenticatedUser', [AuthController::class, 'authenticatedUser'])->name('user.authenticated');;
 });
 
 
-Route::post('/register',[RegisterController::class, 'register'])->name('user.register');
+
