@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('refresh', [AuthController::class, 'refresh'])->name('user.refresh');
     Route::post('authenticatedUser', [AuthController::class, 'authenticatedUser'])->name('user.authenticated');
 });
+
+
+
+
+
