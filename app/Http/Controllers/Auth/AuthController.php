@@ -53,6 +53,10 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
+    public function checkToken() {
+        return response()->json(['success' => true],200);
+    }
+
 
     public function register(RegisterRequest $request){
           $user = User::create([
