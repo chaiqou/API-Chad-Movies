@@ -36,6 +36,9 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        $user = User::where('email', $request['email'])->where('email_verified_at', '<>', NULL)->first();
+
+
 
         $credentials = $request->only('email', 'password');
 

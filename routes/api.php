@@ -19,7 +19,7 @@ use App\Http\Controllers\Auth\VerificationController;
 
 Route::group(['middleware' => ['api']], function () {
     Route::post('register' , [AuthController::class, 'register'])->name('user.register');
-    Route::post('login', [AuthController::class, 'login'])->name('user.login');
+    Route::post('login', [AuthController::class, 'login'])->name('user.login')->middleware('verified');
     Route::get('email-verification', [\App\Http\Controllers\VerificationController::class, 'verify'])->name('verification.verify');
     Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
 });
