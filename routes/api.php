@@ -20,7 +20,7 @@ use App\Http\Controllers\Auth\RegisterController;
 
 Route::group(['middleware' => ['api']], function () {
     Route::post('register' , [AuthController::class, 'register'])->name('user.register');
-    Route::post('login', [AuthController::class, 'login'])->name('user.login')->middleware('verified');
+    Route::post('login', [AuthController::class, 'login'])->name('user.login');
     Route::get('email-verification', [VerificationController::class, 'verify'])->name('verification.verify');
     Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
 });
@@ -30,10 +30,8 @@ Route::group(['middleware' => ['jwt']], function() {
     Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
     Route::post('refresh', [AuthController::class, 'refresh'])->name('user.refresh');
     Route::post('authenticatedUser', [AuthController::class, 'authenticatedUser'])->name('user.authenticated');
-    Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
+    Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('verified');;
 });
-
-
 
 
 

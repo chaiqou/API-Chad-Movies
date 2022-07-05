@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use Illuminate\Auth\Events\Registered;
 
 
 
@@ -38,7 +38,12 @@ class AuthController extends Controller
     {
         $user = User::where('email', $request['email'])->where('email_verified_at', '<>', NULL)->first();
 
-
+        if (!$user) {
+            return response()->json([
+                "message" => "User not found",
+                "success" => false
+            ], 404);
+        }
 
         $credentials = $request->only('email', 'password');
 
@@ -76,10 +81,11 @@ class AuthController extends Controller
 
           $user->sendEmailVerificationNotification();
 
-        return $this->login($request);
+        return response()->json([
+            "message" => "User created successfully!",
+            "success" => true]);
 
-
-}
+        }
      /**
      * Get the authenticated User.
      *
