@@ -45,7 +45,7 @@ class VerifyNotification extends Notification
 			'hash' => sha1($notifiable->getEmailForVerification()),
 		];
 
-		$url = env('FRONTEND_APP') . 'email-confirmed-thanks?';
+		$url = env('FRONTEND_APP') . 'user-confirmed?';
 
 		foreach ($params as $key => $param)
 		{
