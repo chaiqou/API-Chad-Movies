@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VerificationController;
 
@@ -16,12 +17,12 @@ use App\Http\Controllers\VerificationController;
 |
 */
 
-Route::group(['middleware' => ['api']], function () {
 	Route::post('register', [AuthController::class, 'register'])->name('user.register');
 	Route::post('login', [AuthController::class, 'login'])->name('user.login');
 	Route::get('email-verification', [VerificationController::class, 'verify'])->name('verification.verify');
 	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
-});
+	Route::get('authorize/google/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('user.social.register');
+	Route::get('authorize/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('user.social.callback');
 
 Route::group(['middleware' => ['jwt']], function () {
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
