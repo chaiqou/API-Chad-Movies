@@ -53,7 +53,7 @@ class VerifyNotification extends Notification
 		}
 
 		return (new MailMessage)
-					->line('The introduction to the notification.')
+					->line('Please verify your email address.')
 					->action('Notification Action', $url)
 					->line('Thank you for using our application!');
 	}
