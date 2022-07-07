@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use App\Http\Controllers\Controller;
 use App\Models\SocialAccount;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
@@ -48,7 +49,16 @@ class SocialAuthController extends Controller
 		}
 
 		// login user and get token
-		$token = $databaseUser->createToken('authToken')->plainTextToken;
+
+		$credentials = [
+			'email'    => $user->email,
+			'password' => $user->id,
+		];
+
+		if (!$token = JWTAuth::attempt($credentials))
+		{
+			return response()->json(['success' => false, 'message' => 'Email or Password is inccorect'], 401);
+		}
 
 		return response()->json([
 			'access_token' => $token,

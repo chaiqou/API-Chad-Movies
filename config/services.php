@@ -32,6 +32,6 @@ return [
 	'google' => [
 		'client_id'     => env('GOOGLE_CLIENT_ID'),
 		'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-		'redirect'      => env('FRONTEND_APP') . 'api/authorize/google/callback',
+		'redirect'      => 'http://localhost:8000/api/authorize/google/callback',
 	],
 ];
