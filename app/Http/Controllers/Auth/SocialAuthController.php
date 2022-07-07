@@ -23,8 +23,7 @@ class SocialAuthController extends Controller
 
 		if (!$user)
 		{
-			// aq unda davabruno json romelic gamoitans daifelebis shemtxvevashi erors
-			dd('failed');
+			return response()->json(['success' => false, 'message' => 'Failed to login'], 401);
 		}
 
 		$databaseUser = User::whereEmail($user->email)->first();
@@ -43,17 +42,15 @@ class SocialAuthController extends Controller
 				'provider'         => 'google',
 			]);
 		}
-		else
-		{
-			dd('this user exists');
-		}
 
 		// login user and get token
 
 		$credentials = [
-			'email'    => $user->email,
-			'password' => $user->id,
+			'email'          => $user->email,
+			'password'       => $user->id,
 		];
+
+		$token = JWTAuth::attempt($credentials);
 
 		if (!$token = JWTAuth::attempt($credentials))
 		{
