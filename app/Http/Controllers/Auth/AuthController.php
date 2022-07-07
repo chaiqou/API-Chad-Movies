@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 
@@ -26,8 +27,10 @@ class AuthController extends Controller
 	 */
 	public function login(Request $request)
 	{
+		// check if user email_verified_at !=== null and get it
 		$user = User::where('email', $request['email'])->where('email_verified_at', '<>', null)->first();
 
+		// if user is not verified email or doesnot exists
 		if (!$user)
 		{
 			return response()->json([
@@ -38,9 +41,10 @@ class AuthController extends Controller
 
 		$credentials = $request->only('email', 'password');
 
-		if (!$token = auth()->attempt($credentials))
+		// if password or email is incorrect
+		if (!$token = JWTAuth::attempt($credentials))
 		{
-			return response()->json(['error' => 'Email or Password is invalid'], 401);
+			return response()->json(['success' => false, 'message' => 'Email or Password is inccorect'], 401);
 		}
 
 		return $this->respondWithToken($token);
