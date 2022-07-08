@@ -20,13 +20,13 @@ use App\Http\Controllers\VerificationController;
 	Route::post('register', [AuthController::class, 'register'])->name('user.register');
 	Route::post('login', [AuthController::class, 'login'])->name('user.login');
 	Route::get('email-verification', [VerificationController::class, 'verify'])->name('verification.verify');
-	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
 	Route::get('authorize/google/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('user.social.register');
 	Route::get('authorize/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('user.social.callback');
 
-Route::group(['middleware' => ['jwt']], function () {
+Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::post('refresh', [AuthController::class, 'refresh'])->name('user.refresh');
 	Route::post('authenticatedUser', [AuthController::class, 'authenticatedUser'])->name('user.authenticated');
 	Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('verified');
+	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
 });

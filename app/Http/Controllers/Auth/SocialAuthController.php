@@ -43,8 +43,6 @@ class SocialAuthController extends Controller
 			]);
 		}
 
-		// login user and get token
-
 		$credentials = [
 			'email'          => $user->email,
 			'password'       => $user->id,
