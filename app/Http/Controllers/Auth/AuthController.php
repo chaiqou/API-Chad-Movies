@@ -37,7 +37,12 @@ class AuthController extends Controller
 			], 404);
 		}
 
-		$credentials = $request->only('email', 'password', 'remember');
+		$credentials = $request->only('email', 'password');
+
+		if ($request->remember_token === true)
+		{
+			JWTAuth::factory()->setTTL(999999);
+		}
 
 		if (!$token = JWTAuth::attempt($credentials))
 		{
