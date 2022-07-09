@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\Auth\SocialAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::post('refresh', [AuthController::class, 'refresh'])->name('user.refresh');
 	Route::post('authenticatedUser', [AuthController::class, 'authenticatedUser'])->name('user.authenticated');
-	Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('verified');
 	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
+	Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('verified');
+	Route::post('movies', [MovieController::class, 'store'])->name('movies.store');
 });
