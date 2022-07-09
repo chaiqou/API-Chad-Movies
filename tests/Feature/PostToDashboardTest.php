@@ -17,12 +17,13 @@ class PostToDashboardTest extends TestCase
 		$this->actingAs($user = User::factory()->make(), 'api');
 
 		$response = $this->post('/api/movies', [
-			'title'   => 'The movie title',
-			'body'    => 'The movie body',
-			'user_id' => $user->id,
+			'title'   => '',
+			'body'    => '',
 		]);
 
 		$movie = Movie::first();
+
+		$this->assertCount(0, Movie::all());
 
 		$response->assertStatus(201);
 	}
