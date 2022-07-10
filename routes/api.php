@@ -19,6 +19,7 @@ use App\Http\Controllers\Auth\SocialAuthController;
 */
 
 	Route::post('register', [AuthController::class, 'register'])->name('user.register');
+	Route::apiResource('movies', MovieController::class);
 	Route::post('login', [AuthController::class, 'login'])->name('user.login');
 	Route::get('email-verification', [VerificationController::class, 'verify'])->name('verification.verify');
 	Route::get('authorize/google/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('user.social.register');
@@ -30,5 +31,4 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('authenticatedUser', [AuthController::class, 'authenticatedUser'])->name('user.authenticated');
 	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
 	Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('verified');
-	Route::post('movies', [MovieController::class, 'store'])->name('movies.store');
 });

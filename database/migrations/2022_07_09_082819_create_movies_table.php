@@ -16,9 +16,9 @@ return new class extends Migration {
 			$table->id();
 			$table->bigInteger('user_id')->unsigned();
 			$table->string('title');
-			$table->string('body');
 			$table->string('director');
 			$table->string('genre');
+			$table->text('description');
 			$table->integer('year');
 			$table->integer('budget');
 			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
