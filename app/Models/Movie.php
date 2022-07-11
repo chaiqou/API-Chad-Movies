@@ -3,13 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Movie extends Model
 {
 	use HasFactory;
 
-	protected $guarded = [];
+	use HasTranslations;
+
+	public $translatable = ['title', 'description', 'director'];
+
+	protected $fillable = [
+		'title',
+		'director',
+		'genre',
+		'description',
+		'year',
+		'budget',
+		'user_id',
+	];
 
 	public function quotes()
 	{
