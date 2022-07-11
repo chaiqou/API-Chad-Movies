@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Resources\GenreResource;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\Auth\AuthController;
@@ -31,4 +32,5 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('authenticatedUser', [AuthController::class, 'authenticatedUser'])->name('user.authenticated');
 	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
 	Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('verified');
+	Route::apiResource('genres', GenreResource::class);
 });
