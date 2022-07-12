@@ -14,15 +14,7 @@ class Movie extends Model
 
 	public $translatable = ['title', 'description', 'director'];
 
-	protected $fillable = [
-		'title',
-		'director',
-		'genre',
-		'description',
-		'year',
-		'budget',
-		'user_id',
-	];
+	protected $guarded = [];
 
 	public function quotes()
 	{

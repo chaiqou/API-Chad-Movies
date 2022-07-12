@@ -27,7 +27,32 @@ class MovieController extends Controller
 	 */
 	public function store(MovieRequest $request)
 	{
-		$movie = Movie::create($request->validated());
+		if ($request->hasFile('thumbnail'))
+		{
+			$filename = $request->thumbnail->getClientOriginalName();
+			info($filename);
+		}
+
+		$movie = Movie::create(
+			[
+				'title' => [
+					'en' => $request->title_en,
+					'ka' => $request->title_ka,
+				],
+				'director' => [
+					'en' => $request->director_en,
+					'ka' => $request->director_ka,
+				],
+				'description' => [
+					'en' => $request->description_en,
+					'ka' => $request->description_ka,
+				],
+				'year'        => $request->year,
+				'budget'      => $request->budget,
+				'genre'       => $request->genre,
+			]
+		);
+
 		return new MovieResource($movie);
 	}
 
