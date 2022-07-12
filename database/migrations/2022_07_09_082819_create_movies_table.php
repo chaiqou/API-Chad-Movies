@@ -18,7 +18,7 @@ return new class extends Migration {
 			$table->text('director');
 			$table->text('genre');
 			$table->text('description');
-			$table->string('photo')->nullable();
+			$table->string('thumbnail')->nullable();
 			$table->integer('year');
 			$table->integer('budget');
 			$table->timestamps();

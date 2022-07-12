@@ -27,31 +27,38 @@ class MovieController extends Controller
 	 */
 	public function store(MovieRequest $request)
 	{
-		if ($request->hasFile('thumbnail'))
+		if ($request->thumbnail)
 		{
-			$filename = $request->thumbnail->getClientOriginalName();
-			info($filename);
-		}
+			$position = strpos($request->thumbnail, ';');
+			$sub = substr($request->thumbnail, 0, $position);
+			$exist = explode('/', $sub)[1];
 
-		$movie = Movie::create(
-			[
-				'title' => [
-					'en' => $request->title_en,
-					'ka' => $request->title_ka,
-				],
-				'director' => [
-					'en' => $request->director_en,
-					'ka' => $request->director_ka,
-				],
-				'description' => [
-					'en' => $request->description_en,
-					'ka' => $request->description_ka,
-				],
-				'year'        => $request->year,
-				'budget'      => $request->budget,
-				'genre'       => $request->genre,
-			]
-		);
+			$image_name = time() . '.' . $exist;
+			$upload_path = public_path() . '/images/';
+			$image_url = $upload_path . $image_name;
+			file_put_contents($image_url, file_get_contents($request->thumbnail));
+
+			$movie = Movie::create(
+				[
+					'title' => [
+						'en' => $request->title_en,
+						'ka' => $request->title_ka,
+					],
+					'director' => [
+						'en' => $request->director_en,
+						'ka' => $request->director_ka,
+					],
+					'description' => [
+						'en' => $request->description_en,
+						'ka' => $request->description_ka,
+					],
+					'year'        => $request->year,
+					'budget'      => $request->budget,
+					'genre'       => $request->genre,
+					'thumbnail'   => $image_url,
+				]
+			);
+		}
 
 		return new MovieResource($movie);
 	}

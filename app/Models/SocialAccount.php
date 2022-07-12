@@ -14,5 +14,5 @@ class SocialAccount extends Model
 	 *
 	 * @var array<int, string>
 	 */
-	protected $guarderd = [];
+	protected $fillable = ['user_id', 'provider_user_id', 'provider'];
 }

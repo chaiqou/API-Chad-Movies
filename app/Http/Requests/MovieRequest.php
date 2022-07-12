@@ -33,6 +33,7 @@ class MovieRequest extends FormRequest
 			'description_ka'              => ['required'],
 			'year'                        => ['required'],
 			'budget'                      => ['required'],
+			'thumbnail'                   => ['required'],
 		];
 	}
 }
