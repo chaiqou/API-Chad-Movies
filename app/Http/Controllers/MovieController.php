@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MovieRequest;
-use App\Http\Resources\MovieResource;
+use Exception;
 use App\Models\Movie;
+use App\Http\Requests\MovieRequest;
+use Illuminate\Support\Facades\File;
+use App\Http\Resources\MovieResource;
 
 class MovieController extends Controller
 {
@@ -29,14 +31,7 @@ class MovieController extends Controller
 	{
 		if ($request->thumbnail)
 		{
-			$position = strpos($request->thumbnail, ';');
-			$sub = substr($request->thumbnail, 0, $position);
-			$exist = explode('/', $sub)[1];
-
-			$image_name = time() . '.' . $exist;
-			$upload_path = public_path() . '/images/';
-			$image_url = $upload_path . $image_name;
-			file_put_contents($image_url, file_get_contents($request->thumbnail));
+			$image_path = $this->saveImage($request->thumbnail);
 
 			$movie = Movie::create(
 				[
@@ -55,12 +50,12 @@ class MovieController extends Controller
 					'year'        => $request->year,
 					'budget'      => $request->budget,
 					'genre'       => $request->genre,
-					'thumbnail'   => $image_url,
+					'thumbnail'   => $image_path,
 				]
 			);
-		}
 
-		return new MovieResource($movie);
+			return new MovieResource($movie);
+		}
 	}
 
 	/**
@@ -100,5 +95,38 @@ class MovieController extends Controller
 	{
 		$movie->delete();
 		return response()->noContent();
+	}
+
+	private function saveImage($image)
+	{
+		if (preg_match('/^data:image\/(\w+);base64,/', $image, $type))
+		{
+			$image = substr($image, strpos($image, ',') + 1);
+			$type = strtolower($type[1]);
+
+			if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png']))
+			{
+				throw new Exception('invalid image type');
+			}
+
+			$image = str_replace(' ', '+', $image);
+			$image = base64_decode($image);
+		}
+		else
+		{
+			throw new Exception('Invalid image type.');
+		}
+
+		$dir = 'images/';
+		$file_name = uniqid() . '.' . $type;
+		$absolutePath = public_path($dir);
+		$relativePath = $dir . $file_name;
+		if (!file_exists($absolutePath))
+		{
+			File::makeDirectory($absolutePath, 0775, true);
+		}
+		file_put_contents($relativePath, $image);
+
+		return $relativePath;
 	}
 }
