@@ -7,6 +7,7 @@ use App\Models\Movie;
 use App\Http\Requests\MovieRequest;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\MovieResource;
+use Illuminate\Http\Client\Request;
 
 class MovieController extends Controller
 {
@@ -15,9 +16,11 @@ class MovieController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		return MovieResource::collection(Movie::all());
+		$user = $request->user();
+
+		return MovieResource::collection(Movie::where('user_id', $user->id));
 	}
 
 	/**
@@ -29,33 +32,31 @@ class MovieController extends Controller
 	 */
 	public function store(MovieRequest $request)
 	{
-		if ($request->thumbnail)
-		{
-			$image_path = $this->saveImage($request->thumbnail);
+		$image_path = $this->saveImage($request->thumbnail);
 
-			$movie = Movie::create(
-				[
-					'title' => [
-						'en' => $request->title_en,
-						'ka' => $request->title_ka,
-					],
-					'director' => [
-						'en' => $request->director_en,
-						'ka' => $request->director_ka,
-					],
-					'description' => [
-						'en' => $request->description_en,
-						'ka' => $request->description_ka,
-					],
-					'year'        => $request->year,
-					'budget'      => $request->budget,
-					'genre'       => $request->genre,
-					'thumbnail'   => $image_path,
-				]
-			);
+		$movie = Movie::create(
+			[
+				'title' => [
+					'en' => $request->title_en,
+					'ka' => $request->title_ka,
+				],
+				'director' => [
+					'en' => $request->director_en,
+					'ka' => $request->director_ka,
+				],
+				'description' => [
+					'en' => $request->description_en,
+					'ka' => $request->description_ka,
+				],
+				'year'          => $request->year,
+				'budget'        => $request->budget,
+				'genre'         => $request->genre,
+				'thumbnail'     => $image_path,
+				'user_id'       => auth()->user()->id,
+			]
+		);
 
-			return new MovieResource($movie);
-		}
+		return new MovieResource($movie);
 	}
 
 	/**
@@ -65,8 +66,13 @@ class MovieController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Movie $movie)
+	public function show(Movie $movie, Request $request)
 	{
+		$user = $request->user();
+		if ($user->id !== $movie->user_id)
+		{
+			return response()->json(['error' => 'Unauthorized user'], 401);
+		}
 		return new MovieResource($movie);
 	}
 
@@ -91,10 +97,15 @@ class MovieController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Movie $movie)
+	public function destroy(Movie $movie, Request $request)
 	{
+		$user = $request->user();
+		if ($user->id !== $movie->user_id)
+		{
+			return response()->json(['error' => 'Unauthorized user'], 401);
+		}
 		$movie->delete();
-		return response()->noContent();
+		return response()->json(['success' => 'Movie deleted'], 204);
 	}
 
 	private function saveImage($image)

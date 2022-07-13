@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,14 +14,16 @@ return new class extends Migration {
 	{
 		Schema::create('movies', function (Blueprint $table) {
 			$table->id();
+			$table->bigInteger('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->text('title');
 			$table->text('director');
 			$table->text('genre');
 			$table->text('description');
 			$table->string('thumbnail')->nullable();
+			$table->string('slug');
 			$table->integer('year');
 			$table->integer('budget');
-			$table->foreignIdFor(User::class, 'user_id')->constrained();
 			$table->timestamps();
 		});
 	}
