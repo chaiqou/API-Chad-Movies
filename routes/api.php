@@ -32,5 +32,6 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
 	Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('verified');
 	Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
+	Route::get('movie-slug/{movie:slug}', [MovieController::class, 'showBySlug'])->name('movie.getBySlug');
 	Route::apiResource('movies', MovieController::class);
 });

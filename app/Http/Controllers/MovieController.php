@@ -76,6 +76,11 @@ class MovieController extends Controller
 		return new MovieResource($movie);
 	}
 
+	public function showBySlug(Movie $movie)
+	{
+		return new MovieResource($movie);
+	}
+
 	/**
 	 * Update the specified resource in storage.
 	 *
