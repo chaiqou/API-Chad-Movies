@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\Movie;
+use Illuminate\Http\Request;
 use App\Http\Requests\MovieRequest;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\MovieResource;
-use Illuminate\Http\Client\Request;
 
 class MovieController extends Controller
 {
@@ -18,9 +18,9 @@ class MovieController extends Controller
 	 */
 	public function index(Request $request)
 	{
-		$user = $request->user();
+		$user = auth()->user();
 
-		return MovieResource::collection(Movie::where('user_id', $user->id));
+		return MovieResource::collection(Movie::where('user_id', $user->id)->get());
 	}
 
 	/**
