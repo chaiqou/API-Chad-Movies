@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\Auth\AuthController;
@@ -34,4 +35,5 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
 	Route::get('movie-slug/{movie:slug}', [MovieController::class, 'showBySlug'])->name('movie.getBySlug');
 	Route::apiResource('movies', MovieController::class);
+	Route::apiResource('users', UserController::class);
 });
