@@ -15,7 +15,8 @@ class UserController extends Controller
 	 */
 	public function index(User $user, Request $request)
 	{
-		$users = User::where('id', 'LIKE', '%' . $request->userId . '%')->get();
+		$id = auth()->user()->id;
+		$users = User::where('id', 'LIKE', '%' . $id . '%')->get();
 		return new UserResource($users);
 	}
 
