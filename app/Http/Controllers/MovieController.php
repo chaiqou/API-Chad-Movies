@@ -19,8 +19,9 @@ class MovieController extends Controller
 	public function index(Request $request)
 	{
 		$user = auth()->user();
+		$movies = Movie::where('user_id', $user->id)->where('title', 'LIKE', '%' . $request->search . '%')->get();
 
-		return MovieResource::collection(Movie::where('user_id', $user->id)->get());
+		return MovieResource::collection($movies);
 	}
 
 	/**
