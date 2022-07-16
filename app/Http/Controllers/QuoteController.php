@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MovieRequest;
+use App\Http\Requests\QuoteRequest;
 use Exception;
 use App\Models\Quote;
 use Illuminate\Http\Request;
@@ -28,7 +28,7 @@ class QuoteController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(MovieRequest $request)
+	public function store(QuoteRequest $request)
 	{
 		$image_path = $this->saveImage($request->thumbnail);
 
@@ -38,7 +38,7 @@ class QuoteController extends Controller
 					'en' => $request->quote_en,
 					'ka' => $request->quote_ka,
 				],
-				'movie_id'  => $request->movie_id,
+				'movie_id'  => 1,
 				'thumbnail' => $image_path,
 			]
 		);

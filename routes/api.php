@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VerificationController;
@@ -36,4 +37,5 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('movie-slug/{movie:slug}', [MovieController::class, 'showBySlug'])->name('movie.getBySlug');
 	Route::apiResource('movies', MovieController::class);
 	Route::apiResource('users', UserController::class);
+	Route::apiResource('quotes', QuoteController::class);
 });

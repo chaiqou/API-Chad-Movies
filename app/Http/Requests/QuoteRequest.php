@@ -13,7 +13,7 @@ class QuoteRequest extends FormRequest
 	 */
 	public function authorize()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -24,9 +24,10 @@ class QuoteRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'quote'     => ['required'],
-			'thumbnail' => ['required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'],
-			'movie_id'  => ['required|exists:movies,id'],
+			'quote_en'     => ['required'],
+			'quote_ka'     => ['required'],
+			'thumbnail'    => ['required'],
+			'movie_id'     => ['required|exists:movies,id'],
 		];
 	}
 }
