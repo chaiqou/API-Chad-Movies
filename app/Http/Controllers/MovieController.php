@@ -19,7 +19,7 @@ class MovieController extends Controller
 	public function index(Request $request)
 	{
 		$user = auth()->user();
-		$movies = Movie::where('user_id', $user->id)->where('title', 'LIKE', '%' . $request->search . '%')->get();
+		$movies = Movie::where('user_id', $user->id)->where('title', 'LIKE', '%' . $request->search . '%')->with('quotes')->get();
 
 		return MovieResource::collection($movies);
 	}
@@ -74,12 +74,14 @@ class MovieController extends Controller
 		{
 			return response()->json(['error' => 'Unauthorized user'], 401);
 		}
+
 		return new MovieResource($movie);
 	}
 
-	public function showBySlug(Movie $movie)
+	public function showBySlug(Movie $movie, Request $request)
 	{
-		return new MovieResource($movie);
+		$movies = Movie::where('id', $request->id)->with('quotes')->get();
+		return new MovieResource($movies);
 	}
 
 	/**

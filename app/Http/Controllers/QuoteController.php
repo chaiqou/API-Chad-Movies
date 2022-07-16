@@ -38,8 +38,8 @@ class QuoteController extends Controller
 					'en' => $request->quote_en,
 					'ka' => $request->quote_ka,
 				],
-				'movie_id'  => 1,
 				'thumbnail' => $image_path,
+				'movie_id'  => $request->movie_id,
 			]
 		);
 
@@ -55,7 +55,8 @@ class QuoteController extends Controller
 	 */
 	public function show(Quote $quote)
 	{
-		return new QuoteResource($quote);
+		$quotes = Quote::where('movie_id', $quote->movie_id)->get();
+		return new QuoteResource($quotes);
 	}
 
 	/**

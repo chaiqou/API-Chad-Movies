@@ -14,7 +14,11 @@ class Quote extends Model
 
 	public $translatable = ['quote'];
 
-	protected $guarded = ['id'];
+	protected $fillable = [
+		'quote',
+		'thumbnail',
+		'movie_id',
+	];
 
 	public function movie()
 	{
