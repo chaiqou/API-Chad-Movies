@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\QuoteRequest;
 use Exception;
 use App\Models\Quote;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\QuoteResource;
 
@@ -67,8 +66,15 @@ class QuoteController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function update(Request $request, Quote $quote)
+	public function update(Quote $quote, QuoteRequest $request)
 	{
+		$quote->update([
+			'quote' => [
+				'en' => $request->quote_en,
+				'ka' => $request->quote_ka,
+			],
+			'thumbnail' => $this->saveImage($request->thumbnail),
+		]);
 		return new QuoteResource($quote);
 	}
 

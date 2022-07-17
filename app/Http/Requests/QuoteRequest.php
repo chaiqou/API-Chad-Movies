@@ -27,7 +27,6 @@ class QuoteRequest extends FormRequest
 			'quote_en'     => ['required'],
 			'quote_ka'     => ['required'],
 			'thumbnail'    => ['required'],
-			'movie_id'     => ['required'],
 		];
 	}
 }
