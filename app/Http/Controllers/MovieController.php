@@ -94,7 +94,24 @@ class MovieController extends Controller
 	 */
 	public function update(MovieRequest $request, Movie $movie)
 	{
-		$movie->update($request->validated());
+		$movie->update([
+			'title' => [
+				'en' => $request->title_en,
+				'ka' => $request->title_ka,
+			],
+			'director' => [
+				'en' => $request->director_en,
+				'ka' => $request->director_ka,
+			],
+			'description' => [
+				'en' => $request->description_en,
+				'ka' => $request->description_ka,
+			],
+			'year'          => $request->year,
+			'budget'        => $request->budget,
+			'genre'         => $request->genre,
+			'thumbnail'     => $this->saveImage($request->thumbnail),
+		]);
 		return new MovieResource($movie);
 	}
 
