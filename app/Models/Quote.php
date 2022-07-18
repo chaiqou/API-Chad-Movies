@@ -25,12 +25,12 @@ class Quote extends Model
 		return $this->belongsTo(Movie::class, 'movie_id');
 	}
 
-	public function comments()
+	public function comment()
 	{
 		return $this->hasMany(Comment::class);
 	}
 
-	public function likes()
+	public function like()
 	{
 		return $this->hasMany(Like::class);
 	}

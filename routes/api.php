@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,4 +41,6 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::apiResource('users', UserController::class);
 	Route::apiResource('quotes', QuoteController::class);
 	Route::apiResource('quotes/{quote}/comment', CommentController::class);
+	Route::post('like/{quote}', [LikeController::class, 'like'])->name('quote.like');
+	Route::delete('like/{quote}', [LikeController::class, 'unlike'])->name('quote.unlike');
 });

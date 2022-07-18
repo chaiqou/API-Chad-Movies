@@ -9,7 +9,7 @@ class Like extends Model
 {
 	use HasFactory;
 
-	protected $guarderd = [];
+	protected $fillable = ['user_id', 'quote_id'];
 
 	public function quotes()
 	{
