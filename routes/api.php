@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\SocialAuthController;
+use App\Models\Comment;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,4 +39,5 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::apiResource('movies', MovieController::class);
 	Route::apiResource('users', UserController::class);
 	Route::apiResource('quotes', QuoteController::class);
+	Route::apiResource('quote/{quote}/comment', Comment::class);
 });
