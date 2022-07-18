@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Notifications\VerifyNotification;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\VerifyNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
@@ -65,8 +65,13 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 		$this->notify(new VerifyNotification());
 	}
 
-	public function movies()
+	public function movie()
 	{
 		return $this->hasMany(Movie::class);
+	}
+
+	public function quote()
+	{
+		return $this->hasMany(Quote::class);
 	}
 }

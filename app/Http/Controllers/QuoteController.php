@@ -37,8 +37,9 @@ class QuoteController extends Controller
 					'en' => $request->quote_en,
 					'ka' => $request->quote_ka,
 				],
-				'thumbnail' => $image_path,
-				'movie_id'  => $request->movie_id,
+				'thumbnail'          => $image_path,
+				'movie_id'           => $request->movie_id,
+				'user_id'            => auth()->user()->id,
 			]
 		);
 

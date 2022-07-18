@@ -18,11 +18,17 @@ class Quote extends Model
 		'quote',
 		'thumbnail',
 		'movie_id',
+		'user_id',
 	];
 
 	public function movie()
 	{
 		return $this->belongsTo(Movie::class, 'movie_id');
+	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
 	}
 
 	public function comment()
