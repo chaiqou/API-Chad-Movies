@@ -9,7 +9,7 @@ class Comment extends Model
 {
 	use HasFactory;
 
-	protected $guarderd = [];
+	protected $fillable = ['body', 'user_id', 'quote_id'];
 
 	public function quotes()
 	{

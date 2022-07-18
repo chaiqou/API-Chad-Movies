@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Quote;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class CommentController extends Controller
 	 */
 	public function index(Quote $quote)
 	{
-		return $quote->comments;
+		return CommentResource::collection($quote->comments);
 	}
 
 	/**
@@ -25,8 +26,10 @@ class CommentController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function store(Request $request)
+	public function store(Quote $quote, Request $request)
 	{
+		$comment = $quote->comments()->create($request->all());
+		return response()->json(['comment' => new CommentResource($comment)], 201);
 	}
 
 	/**
@@ -38,7 +41,7 @@ class CommentController extends Controller
 	 */
 	public function show(Quote $quote, Comment $comment)
 	{
-		return $comment;
+		return new CommentResource($comment);
 	}
 
 	/**
@@ -60,7 +63,9 @@ class CommentController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Comment $comment)
+	public function destroy(Quote $quote, Comment $comment)
 	{
+		$comment->delete();
+		return response(null, 204);
 	}
 }
