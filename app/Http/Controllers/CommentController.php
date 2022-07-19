@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use App\Models\Quote;
+use App\Notifications\NewCommentNotification;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -29,6 +30,10 @@ class CommentController extends Controller
 	public function store(Quote $quote, Request $request)
 	{
 		$comment = $quote->comment()->create($request->all());
+
+		$user = $quote->user;
+		$user->notify(new NewCommentNotification($comment));
+
 		return response()->json(['comment' => new CommentResource($comment)], 201);
 	}
 
