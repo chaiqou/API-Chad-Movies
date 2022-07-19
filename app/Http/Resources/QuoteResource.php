@@ -22,8 +22,12 @@ class QuoteResource extends JsonResource
 			'thumbnail'      => $this->thumbnail,
 			'movie_id'       => $this->movie_id,
 			'user_id'        => $this->user_id,
-			'thmbnail'       => $this->thumbnail,
+			'comments'       => CommentResource::collection($this->comment),
+			'comments_count' => $this->comment->count(),
+			'likes'          => $this->like,
+			'likes_count'    => $this->like->count(),
 			'userinfo'       => new UserResource($this->user),
+			'movieinfo'      => new MovieResource($this->movie),
 		];
 	}
 }

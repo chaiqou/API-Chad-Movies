@@ -17,6 +17,7 @@ return new class extends Migration {
 			$table->text('body');
 			$table->bigInteger('quote_id')->unsigned();
 			$table->bigInteger('user_id')->unsigned();
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 			$table->foreign('quote_id')->references('id')->on('quotes')->onDelete('cascade');
 			$table->timestamps();
 		});

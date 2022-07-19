@@ -21,6 +21,8 @@ class Quote extends Model
 		'user_id',
 	];
 
+	protected $with = ['user', 'movie', 'comment', 'like'];
+
 	public function movie()
 	{
 		return $this->belongsTo(Movie::class, 'movie_id');
