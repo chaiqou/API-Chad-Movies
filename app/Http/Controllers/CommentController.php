@@ -28,7 +28,7 @@ class CommentController extends Controller
 	 */
 	public function store(Quote $quote, Request $request)
 	{
-		$comment = $quote->comments()->create($request->all());
+		$comment = $quote->comment()->create($request->all());
 		return response()->json(['comment' => new CommentResource($comment)], 201);
 	}
 

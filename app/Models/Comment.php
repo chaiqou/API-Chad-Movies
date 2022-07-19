@@ -11,6 +11,15 @@ class Comment extends Model
 
 	protected $fillable = ['body', 'user_id', 'quote_id'];
 
+	protected static function boot()
+	{
+		parent::boot();
+
+		static::creating(function ($comment) {
+			$comment->user_id = auth()->id();
+		});
+	}
+
 	public function quotes()
 	{
 		return $this->belongsTo(Quote::class);

@@ -16,9 +16,8 @@ class LikeResource extends JsonResource
 	public function toArray($request)
 	{
 		return [
-			'data'            => $this->collection,
-			'like_count'      => $this->count(),
-			'user_likes_post' => $this->collection->contains('id', auth()->user()),
+			'data'                   => $this->collection,
+			'like_count'             => $this->count(),
 		];
 	}
 }
