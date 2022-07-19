@@ -11,9 +11,6 @@ class LikeController extends Controller
 		$quote->like()->create([
 			'user_id' => auth()->id(),
 		]);
-
-		// $quote->like()->toggle(auth()->user());
-		// return new LikeResource($quote->like);
 	}
 
 	public function unlike(Quote $quote)
