@@ -44,9 +44,10 @@ class NewCommentNotification extends Notification
 	public function toArray($notifiable)
 	{
 		return [
-			'commentBy' => $this->comment->user->name,
-			'quote'     => $this->comment->body,
-			'id'        => $this->comment->id,
+			'commentBy'    => $this->comment->user->name,
+			'comment'      => $this->comment->body,
+			'created_at'   => $this->comment->created_at->diffForHumans(),
+			'id'           => $this->comment->id,
 		];
 	}
 }
