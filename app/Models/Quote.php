@@ -40,6 +40,7 @@ class Quote extends Model
 
 	public function like()
 	{
-		return $this->hasMany(Like::class);
+		// return $this->hasMany(Like::class);
+		return $this->belongsToMany(User::class, 'likes', 'quote_id', 'user_id');
 	}
 }

@@ -17,14 +17,13 @@ class QuoteResource extends JsonResource
 	{
 		return [
 			'id'             => $this->id,
-			'quote_en'       => $this->quote,
-			'quote_ka'       => $this->quote,
+			'quote'          => $this->getTranslations(),
 			'thumbnail'      => $this->thumbnail,
 			'movie_id'       => $this->movie_id,
 			'user_id'        => $this->user_id,
 			'comments'       => CommentResource::collection($this->comment),
 			'comments_count' => $this->comment->count(),
-			'likes'          => $this->like,
+			'likes'          => LikeResource::collection($this->like),
 			'likes_count'    => $this->like->count(),
 			'userinfo'       => new UserResource($this->user),
 			'movieinfo'      => new MovieResource($this->movie),

@@ -74,4 +74,9 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 	{
 		return $this->hasMany(Quote::class);
 	}
+
+	public function like()
+	{
+		return $this->belongsToMany(Quote::class, 'likes', 'user_id', 'quote_id');
+	}
 }
