@@ -19,14 +19,14 @@ window.axios.defaults.withCredentials = true;
  * allows your team to easily build robust real-time web applications.
  */
 
-import Echo from "laravel-echo";
+// import Echo from "laravel-echo";
 
-import Pusher from "pusher-js";
-window.Pusher = Pusher;
+// import Pusher from "pusher-js";
+// window.Pusher = Pusher;
 
-window.Echo = new Echo({
-    broadcaster: "pusher",
-    key: "a5f71dba33215ec7e280",
-    cluster: "ap2",
-    forceTLS: true,
-});
+// window.Echo = new Echo({
+//     broadcaster: "pusher",
+//     key: "a5f71dba33215ec7e280",
+//     cluster: "ap2",
+//     forceTLS: true,
+// });
