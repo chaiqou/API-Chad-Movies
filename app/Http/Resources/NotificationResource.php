@@ -15,11 +15,12 @@ class NotificationResource extends JsonResource
 	 */
 	public function toArray($request)
 	{
-		return [
-			'commentBy'  => $this->data['commentBy'],
-			'comment'    => $this->data['comment'],
-			'created_at' => $this->data['created_at'],
-			'id'         => $this->id,
-		];
+		// return [
+		// 	'commentBy'  => $this->data['commentBy'],
+		// 	'comment'    => $this->data['comment'],
+		// 	'created_at' => $this->data['created_at'],
+		// 	'id'         => $this->id,
+		// ];
+		return parent::toArray($request);
 	}
 }

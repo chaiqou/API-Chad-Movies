@@ -9,12 +9,16 @@ class LikeController extends Controller
 {
 	public function like(Quote $quote)
 	{
-		$quote = $quote->like()->create([
+		$quotes = $quote->like()->create([
 			'user_id' => auth()->id(),
 		]);
 
 		$user = $quote->user;
-		$user->notify(new NewLikeNotification($quote));
+
+		if ($quotes->user_id !== $quote->user_id)
+		{
+			$user->notify(new NewLikeNotification($quotes));
+		}
 
 		return response()->json([
 			'message' => 'Quote liked successfully',

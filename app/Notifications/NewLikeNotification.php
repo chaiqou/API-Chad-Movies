@@ -44,9 +44,9 @@ class NewLikeNotification extends Notification
 	public function toArray($notifiable)
 	{
 		return [
-			'likeBy'     => $this->like->user->name,
-			'id'         => $this->like->id,
-			'created_at' => $this->like->created_at->diffForHumans(),
+			'likedBy'     => $this->like->user->name,
+			'id'          => $this->like->id,
+			'created_at'  => $this->like->created_at->diffForHumans(),
 		];
 	}
 }
