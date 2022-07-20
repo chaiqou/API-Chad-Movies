@@ -46,4 +46,5 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::delete('like/{quote}', [LikeController::class, 'unlike'])->name('quote.unlike');
 	Route::post('notifications', [NotificationController::class, 'index'])->name('notification.index');
 	Route::post('markAsRead', [NotificationController::class, 'read'])->name('notification.read');
+	Route::post('markAllAsRead', [NotificationController::class, 'readAll'])->name('notification.readAll');
 });
