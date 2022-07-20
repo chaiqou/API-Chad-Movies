@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CommentResource;
-use App\Models\Comment;
 use App\Models\Quote;
-use App\Notifications\NewCommentNotification;
+use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Http\Resources\CommentResource;
+use App\Notifications\NewCommentNotification;
 
 class CommentController extends Controller
 {
@@ -32,7 +32,11 @@ class CommentController extends Controller
 		$comment = $quote->comment()->create($request->all());
 
 		$user = $quote->user;
-		$user->notify(new NewCommentNotification($comment));
+
+		if ($comment->user_id !== $quote->user_id)
+		{
+			$user->notify(new NewCommentNotification($comment));
+		}
 
 		return response()->json(['comment' => new CommentResource($comment)], 201);
 	}

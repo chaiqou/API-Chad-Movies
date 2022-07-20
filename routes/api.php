@@ -9,9 +9,9 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\SocialAuthController;
-use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +29,6 @@ use App\Http\Controllers\NotificationController;
 	Route::get('email-verification', [VerificationController::class, 'verify'])->name('verification.verify');
 	Route::get('authorize/google/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('user.social.register');
 	Route::get('authorize/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('user.social.callback');
-	Route::post('notifications', NotificationController::class);
 
 Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
@@ -45,4 +44,6 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::apiResource('quotes/{quote}/comment', CommentController::class);
 	Route::post('like/{quote}', [LikeController::class, 'like'])->name('quote.like');
 	Route::delete('like/{quote}', [LikeController::class, 'unlike'])->name('quote.unlike');
+	Route::post('notifications', [NotificationController::class, 'index'])->name('notification.index');
+	Route::post('markAsRead', [NotificationController::class, 'read'])->name('notification.read');
 });

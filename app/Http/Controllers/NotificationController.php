@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NotificationResource;
+use Illuminate\Http\Request;
+
 class NotificationController extends Controller
 {
-	public function __invoke()
+	public function index()
 	{
 		return [
-			'read'   => auth()->user()->notifications->where('read_at', !null),
-			'unread' => auth()->user()->notifications->where('read_at', null),
+			'read'   => NotificationResource::collection(auth()->user()->readNotifications),
+			'unread' => NotificationResource::collection(auth()->user()->unReadNotifications),
 		];
+	}
+
+	public function read(Request $request)
+	{
+		auth()->user()->notifications->where('id', $request->id)->markAsRead();
 	}
 }

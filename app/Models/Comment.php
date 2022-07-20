@@ -20,7 +20,7 @@ class Comment extends Model
 		});
 	}
 
-	public function quotes()
+	public function quote()
 	{
 		return $this->belongsTo(Quote::class);
 	}
