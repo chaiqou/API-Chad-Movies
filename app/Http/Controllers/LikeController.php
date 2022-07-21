@@ -14,14 +14,14 @@ class LikeController extends Controller
 			'user_id' => auth()->id(),
 		]);
 
-		broadcast(new LikeEvent($quote->id, 1))->toOthers();
-
 		$user = $quote->user;
 
 		if ($quotes->user_id !== $quote->user_id)
 		{
 			$user->notify(new NewLikeNotification($quotes));
 		}
+
+		broadcast(new LikeEvent($quote->id, 1))->toOthers();
 
 		return response()->json([
 			'message' => 'Quote liked successfully',

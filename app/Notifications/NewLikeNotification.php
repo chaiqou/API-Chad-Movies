@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Models\Like;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class NewLikeNotification extends Notification
 {
@@ -31,7 +32,7 @@ class NewLikeNotification extends Notification
 	 */
 	public function via($notifiable)
 	{
-		return ['database'];
+		return ['database', 'broadcast'];
 	}
 
 	/**
@@ -48,5 +49,21 @@ class NewLikeNotification extends Notification
 			'id'          => $this->like->id,
 			'created_at'  => $this->like->created_at->diffForHumans(),
 		];
+	}
+
+	/**
+	 * Get the broadcastable representation of the notification.
+	 *
+	 * @param mixed $notifiable
+	 *
+	 * @return BroadcastMessage
+	 */
+	public function toBroadcast($notifiable)
+	{
+		return new BroadcastMessage([
+			'likedBy'     => $this->like->user->name,
+			'id'          => $this->like->id,
+			'created_at'  => $this->like->created_at->diffForHumans(),
+		]);
 	}
 }

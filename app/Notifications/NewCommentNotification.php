@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Models\Comment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class NewCommentNotification extends Notification
 {
@@ -31,7 +32,7 @@ class NewCommentNotification extends Notification
 	 */
 	public function via($notifiable)
 	{
-		return ['database'];
+		return ['database', 'broadcast'];
 	}
 
 	/**
@@ -49,5 +50,23 @@ class NewCommentNotification extends Notification
 			'created_at'   => $this->comment->created_at->diffForHumans(),
 			'id'           => $this->comment->id,
 		];
+	}
+
+	/**
+	 * Get the broadcastable representation of the notification.
+	 *
+	 * @param mixed $notifiable
+	 *
+	 * @return BroadcastMessage
+	 */
+	public function toBroadcast($notifiable)
+	{
+		return new BroadcastMessage([
+			'commentBy'    => $this->comment->user->name,
+			'comment'      => $this->comment->body,
+			'created_at'   => $this->comment->created_at->diffForHumans(),
+			'id'           => $this->comment->id,
+			'comment'      => $this->comment,
+		]);
 	}
 }
