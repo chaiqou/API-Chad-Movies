@@ -17,7 +17,9 @@ class QuoteController extends Controller
 	 */
 	public function index()
 	{
-		return QuoteResource::collection(Quote::all());
+		$quotes = Quote::with('user')->latest()->paginate(1);
+
+		return QuoteResource::collection($quotes);
 	}
 
 	/**
@@ -55,7 +57,6 @@ class QuoteController extends Controller
 	 */
 	public function show(Quote $quote)
 	{
-		// $quotes = Quote::where('movie_id', $quote->movie_id)->get();
 		return new QuoteResource($quote);
 	}
 
