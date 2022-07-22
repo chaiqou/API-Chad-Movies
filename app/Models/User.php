@@ -84,14 +84,4 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 	{
 		return $this->hasMany(Comment::class);
 	}
-
-	public function image()
-	{
-		return $this->hasMany(Image::class);
-	}
-
-	public function profileImage()
-	{
-		return $this->hasOne(Image::class)->orderByDesc('id')->where('location', 'profile');
-	}
 }

@@ -9,7 +9,6 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UserImageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\Auth\SocialAuthController;
@@ -43,7 +42,6 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::apiResource('users', UserController::class);
 	Route::apiResource('quotes', QuoteController::class);
 	Route::apiResource('quotes/{quote}/comment', CommentController::class);
-	Route::apiResource('user-images', UserImageController::class);
 	Route::post('like/{quote}', [LikeController::class, 'like'])->name('quote.like');
 	Route::delete('like/{quote}', [LikeController::class, 'unlike'])->name('quote.unlike');
 	Route::post('notifications', [NotificationController::class, 'index'])->name('notification.index');
