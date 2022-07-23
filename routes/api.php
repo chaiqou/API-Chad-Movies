@@ -11,7 +11,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,7 @@ use App\Http\Controllers\Auth\SocialAuthController;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
+| routes are loaded by the RouteServiceProvider within a group whic
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
@@ -29,6 +31,8 @@ use App\Http\Controllers\Auth\SocialAuthController;
 	Route::get('email-verification', [VerificationController::class, 'verify'])->name('verification.verify');
 	Route::get('authorize/google/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('user.social.register');
 	Route::get('authorize/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('user.social.callback');
+	Route::post('forgot-password', [ForgotPasswordController::class, 'sendEmail'])->name('user.forgot-password');
+	Route::post('reset-password', [UpdatePasswordController::class, 'updatePassword'])->name('user.reset-password');
 
 Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');

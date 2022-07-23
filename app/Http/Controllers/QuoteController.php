@@ -17,7 +17,7 @@ class QuoteController extends Controller
 	 */
 	public function index()
 	{
-		$quotes = Quote::with('user')->latest()->paginate(1);
+		$quotes = Quote::with('user')->latest()->paginate(3);
 
 		return QuoteResource::collection($quotes);
 	}
