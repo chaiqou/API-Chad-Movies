@@ -19,15 +19,13 @@ class QuoteResource extends JsonResource
 			'id'             => $this->id,
 			'quote'          => $this->getTranslations(),
 			'thumbnail'      => $this->thumbnail,
-			'movie_id'       => $this->movie_id,
-			'user_id'        => $this->user_id,
 			'comments'       => CommentResource::collection($this->comment),
 			'comments_count' => $this->comment->count(),
 			'likes'          => LikeResource::collection($this->like),
 			'likes_count'    => $this->like->count(),
 			'liked'          => (bool)$this->like->where('user_id', auth()->id())->count(),
-			'userinfo'       => new UserResource($this->user),
-			'movieinfo'      => new MovieResource($this->movie),
+			'user'           => new UserResource($this->user),
+			'movie'          => new MovieResource($this->movie),
 		];
 	}
 }

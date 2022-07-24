@@ -7,6 +7,7 @@ use Exception;
 use App\Models\Quote;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\QuoteResource;
+use Illuminate\Http\Request;
 
 class QuoteController extends Controller
 {
@@ -15,9 +16,9 @@ class QuoteController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index()
+	public function index(Request $request)
 	{
-		$quotes = Quote::with('user')->latest()->paginate(3);
+		$quotes = Quote::latest()->paginate(3);
 
 		return QuoteResource::collection($quotes);
 	}
