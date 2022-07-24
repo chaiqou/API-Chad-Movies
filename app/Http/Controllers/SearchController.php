@@ -21,6 +21,12 @@ class SearchController extends Controller
 			$quote_query->whererelation('movie', 'title', 'like', "%{$request->search}%");
 		}
 
+		if ($request->type === 'none' && $request->search)
+		{
+			$quote_query->where('quote', 'like', "%{$request->search}%")
+				->orWhererelation('movie', 'title', 'like', "%{$request->search}%");
+		}
+
 		$quotes = $quote_query->get();
 
 		return response()->json(QuoteResource::collection($quotes));
