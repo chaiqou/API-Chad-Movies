@@ -56,9 +56,10 @@ class QuoteController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function show(Quote $quote)
+	public function show(Quote $quote, Request $request)
 	{
-		return new QuoteResource($quote);
+		$requested_quote = Quote::find($request->id);
+		return new QuoteResource($requested_quote);
 	}
 
 	/**
