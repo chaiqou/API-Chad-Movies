@@ -14,6 +14,7 @@ use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\UpdatePasswordController;
 use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ use App\Http\Controllers\ForgotPasswordController;
 	Route::get('authorize/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('user.social.callback');
 	Route::post('forgot-password', [ForgotPasswordController::class, 'sendEmail'])->name('user.forgot-password');
 	Route::post('reset-password', [UpdatePasswordController::class, 'updatePassword'])->name('user.reset-password');
+	Route::get('search', [SearchController::class, 'search'])->name('search');
 
 Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
