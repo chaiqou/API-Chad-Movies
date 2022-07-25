@@ -88,10 +88,15 @@ class QuoteController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function destroy(Quote $quote)
+	public function destroy(Quote $quote, Request $request)
 	{
+		$user = $request->user();
+		if ($user->id !== $quote->user_id)
+		{
+			return response()->json(['error' => 'Unauthorized user'], 401);
+		}
 		$quote->delete();
-		return response()->json(['message' => 'Quote deleted successfully']);
+		return response()->json(['success' => 'quote deleted'], 204);
 	}
 
 	private function saveImage($image)

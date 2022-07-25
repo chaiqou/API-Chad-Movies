@@ -35,7 +35,6 @@ use App\Http\Controllers\Auth\SocialAuthController;
 	Route::post('forgot-password', [ForgotPasswordController::class, 'sendEmail'])->name('user.forgot-password');
 	Route::post('reset-password', [UpdatePasswordController::class, 'updatePassword'])->name('user.reset-password');
 	Route::get('search', [SearchController::class, 'search'])->name('search');
-	Route::apiResource('quotes', QuoteController::class);
 
 Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
@@ -47,7 +46,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::get('movie-slug/{id}', [MovieController::class, 'showBySlug'])->name('movie.getBySlug');
 	Route::apiResource('movies', MovieController::class);
 	Route::apiResource('users', UserController::class);
-
+	Route::apiResource('quotes', QuoteController::class);
 	Route::apiResource('quotes/{quote}/comment', CommentController::class);
 	Route::post('like/{quote}', [LikeController::class, 'like'])->name('quote.like');
 	Route::delete('like/{quote}', [LikeController::class, 'unlike'])->name('quote.unlike');
