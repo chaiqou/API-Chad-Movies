@@ -58,8 +58,7 @@ class QuoteController extends Controller
 	 */
 	public function show(Quote $quote, Request $request)
 	{
-		$requested_quote = Quote::find($request->id);
-		return new QuoteResource($requested_quote);
+		return new QuoteResource($quote);
 	}
 
 	/**
