@@ -31,9 +31,10 @@ class SocialAuthController extends Controller
 		if (!$databaseUser)
 		{
 			$databaseUser = User::create([
-				'name'     => $user->name,
-				'email'    => $user->email,
-				'password' => bcrypt($user->id),
+				'name'             => $user->name,
+				'email'            => $user->email,
+				'password'         => bcrypt($user->id),
+				'provider'         => 'google',
 			]);
 
 			$socialAccount = SocialAccount::create([

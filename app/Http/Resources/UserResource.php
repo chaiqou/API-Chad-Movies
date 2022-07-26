@@ -21,6 +21,7 @@ class UserResource extends JsonResource
 			'email'         => $this->email,
 			'password'      => $this->password,
 			'profile_image' => $this->profile_image,
+			'provider'      => $this->provider,
 		];
 		// return parent::toArray($request);
 	}
