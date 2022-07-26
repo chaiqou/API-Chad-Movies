@@ -5,10 +5,11 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use App\Http\Resources\CommentResource;
 use App\Models\Comment;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class NewCommentNotification extends Notification
+class NewCommentNotification extends Notification implements ShouldBroadcast
 {
 	use Queueable;
 

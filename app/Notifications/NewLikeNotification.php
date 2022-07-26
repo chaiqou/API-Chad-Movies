@@ -4,10 +4,11 @@ namespace App\Notifications;
 
 use App\Models\Like;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class NewLikeNotification extends Notification
+class NewLikeNotification extends Notification implements ShouldBroadcast
 {
 	use Queueable;
 

@@ -19,6 +19,9 @@ class UserResource extends JsonResource
 			'id'            => $this->id,
 			'name'          => $this->name,
 			'email'         => $this->email,
+			'password'      => $this->password,
+			'profile_image' => $this->profile_image,
 		];
+		// return parent::toArray($request);
 	}
 }
