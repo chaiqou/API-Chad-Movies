@@ -58,7 +58,11 @@ class UserController extends Controller
 
 	public function updateProfile(Request $request)
 	{
-		$image_path = $this->saveImage($request->profile_image);
+		if ($request->profile_image != auth()->user()->profile_image)
+		{
+			$image_path = $this->saveImage($request->profile_image);
+			User::where('id', auth()->user()->id)->update(['profile_image' => $image_path]);
+		}
 
 		if ($request->email != auth()->user()->email && $request->email != null)
 		{
@@ -73,11 +77,6 @@ class UserController extends Controller
 		if ($request->name != auth()->user()->name && $request->name != null)
 		{
 			User::where('id', auth()->user()->id)->update(['name' => $request->name]);
-		}
-
-		if ($image_path != null)
-		{
-			User::where('id', auth()->user()->id)->update(['profile_image' => $image_path]);
 		}
 
 		return response()->json(['success' => 'Profile updated successfully'], 200);
