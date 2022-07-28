@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Comment;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
@@ -34,12 +33,12 @@ class NotificationEvent implements ShouldBroadcast
 		return  ['message' => $this->comment->user];
 	}
 
-	// public function toBroadcast($notifiable)
-	// {
-	// 	return new BroadcastMessage([
-	// 		'message' => $this->comment,
-	// 	]);
-	// }
+	public function toBroadcast($notifiable)
+	{
+		return new BroadcastMessage([
+			'message' => $this->comment,
+		]);
+	}
 
 	/**
 	 * Get the channels the event should broadcast on.

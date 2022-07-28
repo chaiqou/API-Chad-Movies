@@ -8,7 +8,6 @@ use App\Events\CommentEvent;
 use App\Events\NotificationEvent;
 use Illuminate\Http\Request;
 use App\Http\Resources\CommentResource;
-use App\Notifications\NewCommentNotification;
 
 class CommentController extends Controller
 {
@@ -32,13 +31,6 @@ class CommentController extends Controller
 	public function store(Quote $quote, Request $request)
 	{
 		$comment = $quote->comment()->create($request->all());
-
-		$user = $quote->user;
-
-		if ($comment->user_id !== $quote->user_id)
-		{
-			$user->notify(new NewCommentNotification($comment));
-		}
 
 		broadcast(new CommentEvent($comment))->toOthers();
 		broadcast(new NotificationEvent($comment, $quote))->toOthers();
