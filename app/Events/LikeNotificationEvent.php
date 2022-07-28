@@ -9,11 +9,11 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 
-class NotificationEvent implements ShouldBroadcast
+class LikeNotificationEvent implements ShouldBroadcast
 {
 	use Dispatchable, InteractsWithSockets, SerializesModels;
 
-	public $comment;
+	public $like;
 
 	public $quote;
 
@@ -22,21 +22,21 @@ class NotificationEvent implements ShouldBroadcast
 	 *
 	 * @return void
 	 */
-	public function __construct($comment, $quote)
+	public function __construct($like, $quote)
 	{
-		$this->comment = $comment;
+		$this->like = $like;
 		$this->quote = $quote;
 	}
 
 	public function broadcastWith()
 	{
-		return  ['message' => $this->comment, 'user' => $this->comment->user->id];
+		return  ['message' => $this->like];
 	}
 
 	public function toBroadcast($notifiable)
 	{
 		return new BroadcastMessage([
-			'message' => $this->comment,
+			'message' => $this->like,
 		]);
 	}
 
@@ -47,6 +47,6 @@ class NotificationEvent implements ShouldBroadcast
 	 */
 	public function broadcastOn()
 	{
-		return new PrivateChannel('notification.' . $this->quote->user_id);
+		return new PrivateChannel('likeNotification.' . $this->quote->user_id);
 	}
 }

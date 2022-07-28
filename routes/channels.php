@@ -20,3 +20,7 @@ use Illuminate\Support\Facades\Broadcast;
 Broadcast::channel('notification.{id}', function ($user, $id) {
 	return  true;
 });
+
+Broadcast::channel('likeNotification.{id}', function ($user, $id) {
+	return  true;
+});

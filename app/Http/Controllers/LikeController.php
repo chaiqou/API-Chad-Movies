@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quote;
 use App\Events\LikeEvent;
+use App\Events\LikeNotificationEvent;
 
 class LikeController extends Controller
 {
@@ -13,7 +14,9 @@ class LikeController extends Controller
 			'user_id' => auth()->id(),
 		]);
 
-		LikeEvent::dispatch($quote->id, 1);
+		$like = $quote->like()->where('user_id', auth()->id())->first();
+		broadcast(new LikeEvent($quote->id, 1))->toOthers();
+		broadcast(new LikeNotificationEvent($like, $quote))->toOthers();
 
 		return response()->json([
 			'message' => 'Quote liked successfully',
