@@ -34,6 +34,6 @@ class LikeEvent implements ShouldBroadcast
 	 */
 	public function broadcastOn()
 	{
-		return new Channel('likeChannel');
+		return new Channel('like');
 	}
 }

@@ -31,6 +31,6 @@ class CommentEvent implements ShouldBroadcast
 	 */
 	public function broadcastOn()
 	{
-		return new Channel('commentChannel');
+		return new Channel('comment');
 	}
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Quote;
 use App\Models\Comment;
 use App\Events\CommentEvent;
+use App\Events\NotificationEvent;
 use Illuminate\Http\Request;
 use App\Http\Resources\CommentResource;
 use App\Notifications\NewCommentNotification;
@@ -39,7 +40,8 @@ class CommentController extends Controller
 			$user->notify(new NewCommentNotification($comment));
 		}
 
-		event(new CommentEvent($comment));
+		broadcast(new CommentEvent($comment))->toOthers();
+		broadcast(new NotificationEvent($comment))->toOthers();
 
 		return response()->json(['comment' => $comment], 201);
 	}
