@@ -16,27 +16,30 @@ class NotificationEvent implements ShouldBroadcast
 
 	public $comment;
 
+	public $quote;
+
 	/**
 	 * Create a new event instance.
 	 *
 	 * @return void
 	 */
-	public function __construct(Comment $comment)
+	public function __construct($comment, $quote)
 	{
 		$this->comment = $comment;
+		$this->quote = $quote;
 	}
 
 	public function broadcastWith()
 	{
-		return  ['message' => $this->comment];
+		return  ['message' => $this->comment->user];
 	}
 
-	public function toBroadcast($notifiable)
-	{
-		return new BroadcastMessage([
-			'message' => $this->comment,
-		]);
-	}
+	// public function toBroadcast($notifiable)
+	// {
+	// 	return new BroadcastMessage([
+	// 		'message' => $this->comment,
+	// 	]);
+	// }
 
 	/**
 	 * Get the channels the event should broadcast on.
@@ -45,6 +48,6 @@ class NotificationEvent implements ShouldBroadcast
 	 */
 	public function broadcastOn()
 	{
-		return new PrivateChannel('notification.2');
+		return new PrivateChannel('notification.' . $this->quote->user_id);
 	}
 }
