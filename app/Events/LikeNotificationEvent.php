@@ -26,11 +26,12 @@ class LikeNotificationEvent implements ShouldBroadcast
 	{
 		$this->like = $like;
 		$this->quote = $quote;
+		$this->dontBroadcastToCurrentUser();
 	}
 
 	public function broadcastWith()
 	{
-		return  ['message' => $this->like];
+		return  ['message' => $this->like, 'user' => $this->like->user->id, 'likedBy' => $this->like->user->name];
 	}
 
 	public function toBroadcast($notifiable)

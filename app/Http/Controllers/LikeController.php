@@ -15,7 +15,7 @@ class LikeController extends Controller
 		]);
 
 		$like = $quote->like()->where('user_id', auth()->id())->first();
-		broadcast(new LikeEvent($quote->id, 1))->toOthers();
+		broadcast(new LikeEvent($quote->id, 1));
 		broadcast(new LikeNotificationEvent($like, $quote))->toOthers();
 
 		return response()->json([

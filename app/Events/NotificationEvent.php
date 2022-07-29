@@ -26,11 +26,12 @@ class NotificationEvent implements ShouldBroadcast
 	{
 		$this->comment = $comment;
 		$this->quote = $quote;
+		$this->dontBroadcastToCurrentUser();
 	}
 
 	public function broadcastWith()
 	{
-		return  ['message' => $this->comment, 'user' => $this->comment->user->id];
+		return  ['message' => $this->comment, 'user' => $this->comment->user->id, 'commentBy' => $this->comment->user->name];
 	}
 
 	public function toBroadcast($notifiable)

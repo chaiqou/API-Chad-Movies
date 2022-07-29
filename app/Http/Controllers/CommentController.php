@@ -32,7 +32,8 @@ class CommentController extends Controller
 	{
 		$comment = $quote->comment()->create($request->all());
 
-		broadcast(new CommentEvent($comment))->toOthers();
+		broadcast(new CommentEvent($comment));
+
 		broadcast(new NotificationEvent($comment, $quote))->toOthers();
 
 		return response()->json(['comment' => $comment], 201);
