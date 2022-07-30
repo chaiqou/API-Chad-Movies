@@ -18,7 +18,7 @@ class CommentController extends Controller
 	 */
 	public function index(Quote $quote)
 	{
-		return CommentResource::collection($quote->comments);
+		return CommentResource::collection($quote->comment);
 	}
 
 	/**

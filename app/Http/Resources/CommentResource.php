@@ -19,7 +19,7 @@ class CommentResource extends JsonResource
 			'id'         => $this->id,
 			'body'       => $this->body,
 			'created_at' => $this->created_at->diffForHumans(),
-			'user'       => $this->user->first()->name,
+			'commentBy'  => $this->user->name,
 		];
 	}
 }

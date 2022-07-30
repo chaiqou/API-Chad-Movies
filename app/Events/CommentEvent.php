@@ -24,6 +24,11 @@ class CommentEvent implements ShouldBroadcast
 		$this->comment = $comment;
 	}
 
+	public function broadcastWith()
+	{
+		return  ['comment' => $this->comment, 'body' => $this->comment->body, 'commentBy' => $this->comment->user->name];
+	}
+
 	/**
 	 * Get the channels the event should broadcast on.
 	 *
