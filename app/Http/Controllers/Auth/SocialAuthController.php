@@ -6,18 +6,19 @@ use App\Models\User;
 use App\Models\SocialAccount;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 {
-	public function redirectToProvider()
+	public function redirectToProvider(): JsonResponse
 	{
 		$url = Socialite::driver('google')->stateless()->redirect()->getTargetUrl();
 
 		return response()->json(['url' => $url]);
 	}
 
-	public function handleProviderCallback()
+	public function handleProviderCallback(): JsonResponse
 	{
 		$user = Socialite::driver('google')->stateless()->user();
 

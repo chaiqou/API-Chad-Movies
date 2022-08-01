@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UpdatePasswordRequest;
+use Illuminate\Http\JsonResponse;
 
 class UpdatePasswordController extends Controller
 {
@@ -21,14 +22,14 @@ class UpdatePasswordController extends Controller
 		]);
 	}
 
-	private function tokenNotFoundError()
+	private function tokenNotFoundError(): JsonResponse
 	{
 		return response()->json([
 			'error' => 'you have entered wrong token or email',
 		], 404);
 	}
 
-	private function resetPassword($request)
+	private function resetPassword($request): JsonResponse
 	{
 		$userData = User::whereEmail($request->email)->first();
 

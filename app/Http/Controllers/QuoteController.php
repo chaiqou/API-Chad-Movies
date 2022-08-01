@@ -7,30 +7,20 @@ use Exception;
 use App\Models\Quote;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\QuoteResource;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class QuoteController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index(Request $request)
+	public function index(Request $request): AnonymousResourceCollection
 	{
 		$quotes = Quote::latest()->paginate(3);
 
 		return QuoteResource::collection($quotes);
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(QuoteRequest $request)
+	public function store(QuoteRequest $request): QuoteResource
 	{
 		$image_path = $this->saveImage($request->thumbnail);
 
@@ -49,26 +39,11 @@ class QuoteController extends Controller
 		return new QuoteResource($quote);
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param \App\Models\Quote $quote
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show(Quote $quote, Request $request)
+	public function show(Quote $quote, Request $request): QuoteResource
 	{
 		return new QuoteResource($quote);
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @param \App\Models\Quote        $quote
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
 	public function update(Quote $quote, QuoteRequest $request)
 	{
 		$quote->update([
@@ -81,14 +56,7 @@ class QuoteController extends Controller
 		return new QuoteResource($quote);
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param \App\Models\Quote $quote
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy(Quote $quote, Request $request)
+	public function destroy(Quote $quote, Request $request): JsonResponse
 	{
 		$user = $request->user();
 		if ($user->id !== $quote->user_id)
@@ -99,7 +67,7 @@ class QuoteController extends Controller
 		return response()->json(['success' => 'quote deleted'], 204);
 	}
 
-	private function saveImage($image)
+	private function saveImage($image): string
 	{
 		if (preg_match('/^data:image\/(\w+);base64,/', $image, $type))
 		{

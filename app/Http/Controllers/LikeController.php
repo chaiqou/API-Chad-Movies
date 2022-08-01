@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Quote;
 use App\Events\LikeEvent;
 use App\Events\LikeNotificationEvent;
+use Illuminate\Http\JsonResponse;
 
 class LikeController extends Controller
 {
-	public function like(Quote $quote)
+	public function like(Quote $quote): JsonResponse
 	{
 		$quotes = $quote->like()->create([
 			'user_id' => auth()->id(),
@@ -24,7 +25,7 @@ class LikeController extends Controller
 		]);
 	}
 
-	public function unlike(Quote $quote)
+	public function unlike(Quote $quote): JsonResponse
 	{
 		$quotes = $quote->like()->where('user_id', auth()->id())->first()->delete();
 

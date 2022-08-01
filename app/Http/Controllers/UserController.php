@@ -7,56 +7,18 @@ use Illuminate\Support\Facades\File;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index(User $user, Request $request)
+	public function index(User $user, Request $request): UserResource
 	{
 		$id = auth()->user()->id;
 		$users = User::where('id', 'LIKE', '%' . $id . '%')->first();
 		return new UserResource($users);
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(Request $request)
-	{
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param \App\Models\User $user
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show(User $user)
-	{
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @param \App\Models\User         $user
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(Request $request, User $user)
-	{
-	}
-
-	public function updateProfile(Request $request)
+	public function updateProfile(Request $request): JsonResponse
 	{
 		if ($request->profile_image != auth()->user()->profile_image)
 		{
@@ -82,18 +44,7 @@ class UserController extends Controller
 		return response()->json(['success' => 'Profile updated successfully'], 200);
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param \App\Models\User $user
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy(User $user)
-	{
-	}
-
-	private function saveImage($image)
+	private function saveImage($image): string
 	{
 		if (preg_match('/^data:image\/(\w+);base64,/', $image, $type))
 		{

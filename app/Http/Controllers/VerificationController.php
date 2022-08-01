@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-	public function verify(Request $request)
+	public function verify(Request $request): JsonResponse
 	{
 		$user = User::findOrFail($request->id);
 

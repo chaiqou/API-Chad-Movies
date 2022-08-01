@@ -7,12 +7,13 @@ use App\Models\User;
 use App\Mail\SendMailreset;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordController extends Controller
 {
-	public function sendEmail(Request $request)
+	public function sendEmail(Request $request): JsonResponse
 	{
 		if (!$this->validateEmail($request->email))
 		{
@@ -22,14 +23,13 @@ class ForgotPasswordController extends Controller
 		return $this->successResponse();
 	}
 
-	// send mail
-	public function send($email)
+	public function send($email): void
 	{
 		$token = $this->createToken($email);
 		Mail::to($email)->send(new SendMailreset($token, $email));
 	}
 
-	public function createToken($email)
+	public function createToken($email): string
 	{
 		$oldToken = DB::table('password_resets')->where('email', $email)->first();
 
@@ -43,7 +43,7 @@ class ForgotPasswordController extends Controller
 		return $token;
 	}
 
-	public function saveToken($token, $email)
+	public function saveToken($token, $email): void
 	{
 		DB::table('password_resets')->insert([
 			'email'      => $email,
@@ -52,19 +52,19 @@ class ForgotPasswordController extends Controller
 		]);
 	}
 
-	public function validateEmail($email)
+	public function validateEmail($email): bool
 	{
 		return (bool)User::where('email', $email)->first();
 	}
 
-	public function failedResponse()
+	public function failedResponse(): JsonResponse
 	{
 		return response()->json([
 			'error' => 'Email does not exist.',
 		], 404);
 	}
 
-	public function successResponse()
+	public function successResponse(): JsonResponse
 	{
 		return response()->json([
 			'data' => 'Reset Email is send successfully, please check your inbox.',

@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Quote;
 use Illuminate\Http\Request;
 use App\Http\Resources\QuoteResource;
+use Illuminate\Http\JsonResponse;
 
 class SearchController extends Controller
 {
-	public function search(Request $request)
+	public function search(Request $request): JsonResponse
 	{
 		$quote_query = Quote::with(['user', 'movie', 'comment', 'like']);
 		if ($request->type === 'quote' && $request->search)

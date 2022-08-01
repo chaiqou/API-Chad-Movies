@@ -8,15 +8,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\MovieRequest;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\MovieResource;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class MovieController extends Controller
 {
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index(Request $request)
+	public function index(Request $request): AnonymousResourceCollection
 	{
 		$user = auth()->user();
 		$movies = Movie::where('user_id', $user->id)->where('title', 'LIKE', '%' . $request->search . '%')->with('quotes')->get();
@@ -24,14 +21,7 @@ class MovieController extends Controller
 		return MovieResource::collection($movies);
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(MovieRequest $request)
+	public function store(MovieRequest $request): MovieResource
 	{
 		$image_path = $this->saveImage($request->thumbnail);
 
@@ -60,14 +50,7 @@ class MovieController extends Controller
 		return new MovieResource($movie);
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param \App\Models\Movie $movie
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show(Movie $movie, Request $request)
+	public function show(Movie $movie, Request $request): JsonResponse
 	{
 		$user = $request->user();
 		if ($user->id !== $movie->user_id)
@@ -78,21 +61,13 @@ class MovieController extends Controller
 		return new MovieResource($movie);
 	}
 
-	public function showBySlug(Movie $movie, Request $request)
+	public function showBySlug(Movie $movie, Request $request): MovieResource
 	{
 		$movies = Movie::where('id', $request->id)->with('quotes')->get();
 		return new MovieResource($movies);
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param \Illuminate\Http\Request $request
-	 * @param \App\Models\Movie        $movie
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(MovieRequest $request, Movie $movie)
+	public function update(MovieRequest $request, Movie $movie): MovieResource
 	{
 		$movie->update([
 			'title' => [
@@ -115,14 +90,7 @@ class MovieController extends Controller
 		return new MovieResource($movie);
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param \App\Models\Movie $movie
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy(Movie $movie, Request $request)
+	public function destroy(Movie $movie, Request $request): JsonResponse
 	{
 		$user = $request->user();
 		if ($user->id !== $movie->user_id)
@@ -133,7 +101,7 @@ class MovieController extends Controller
 		return response()->json(['success' => 'Movie deleted'], 204);
 	}
 
-	private function saveImage($image)
+	private function saveImage($image): string
 	{
 		if (preg_match('/^data:image\/(\w+);base64,/', $image, $type))
 		{
