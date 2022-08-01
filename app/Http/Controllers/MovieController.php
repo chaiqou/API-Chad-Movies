@@ -150,7 +150,7 @@ class MovieController extends Controller
 		}
 		else
 		{
-			throw new Exception('Invalid image type.');
+			return  $image;
 		}
 
 		$dir = 'images/';
