@@ -12,11 +12,28 @@
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./app</directory>
-        </include>
-    </coverage>
+   <coverage processUncoveredFiles="true">
+    <include>
+      <directory suffix=".php">./app</directory>
+    </include>
+    <exclude>
+          <file>
+           ./app/Console/Kernel.php
+           </file>
+           <file>
+            ./app/Exceptions/Handler.php
+           </file>
+           <directory>
+           ./app/bootstrap
+           </directory>
+           <directory>
+           ./app/Http/Middleware
+           </directory>
+            <directory>
+           ./app/Providers
+           </directory>
+        </exclude>
+  </coverage>
     <php>
         <env name="APP_ENV" value="testing"/>
         <env name="BCRYPT_ROUNDS" value="4"/>
