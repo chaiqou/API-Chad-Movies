@@ -23,6 +23,5 @@ class UserResource extends JsonResource
 			'profile_image' => $this->profile_image,
 			'provider'      => $this->provider,
 		];
-		// return parent::toArray($request);
 	}
 }
