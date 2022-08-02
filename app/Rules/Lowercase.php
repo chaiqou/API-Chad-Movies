@@ -35,6 +35,6 @@ class Lowercase implements Rule
 	 */
 	public function message()
 	{
-		return 'Must be lowercase!';
+		return response()->json(['message' => 'Must be lowercase!'], 422);
 	}
 }
