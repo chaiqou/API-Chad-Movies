@@ -30,10 +30,11 @@
             </p>
 
             <p>
-                <a href="{{ $actionUrl }}"" style="display: inline-block; margin-left: 3rem; 
-                padding:0.35em 1.2em; border:0.1em solid red; border-radius:0.12em; box-sizing: 
+                <a href="{{ $actionUrl }}""
+                    style="display: inline-block; margin-left: 3rem;
+                padding:0.35em 1.2em; border:0.1em solid red; border-radius:0.12em; box-sizing:
                 border-box; text-decoration: none; font-size: 1rem; font-weight: 400; color: white; background-color: #E31221; border-radius: 4px">
-                Verify account</a>
+                    Verify account</a>
             </p>
 
 
