@@ -3,7 +3,8 @@
 
     Reset your password.
 
-    @component('mail::button', ['url' => 'http://localhost:3000/reset-password?token=' . $email . '&email=' . $token])
+    @component('mail::button',
+        ['url' => 'https://chad-movies.nikoloz.redberryinternship.ge/reset-password?token=' . $email . '&email=' . $token])
         Password Reset
     @endcomponent
 
