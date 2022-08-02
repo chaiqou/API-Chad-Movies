@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Quote;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,10 +19,10 @@ class LikeFactory extends Factory
 	public function definition()
 	{
 		return [
-			'user_id' => function () {
+			'user_id'        => function () {
 				return User::all()->random();
 			},
-			'quote_id' => function () {
+			'quote_id'        => function () {
 				return Quote::all()->random();
 			},
 		];
