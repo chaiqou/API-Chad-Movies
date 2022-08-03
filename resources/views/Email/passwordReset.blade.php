@@ -4,7 +4,7 @@
     Reset your password.
 
     @component('mail::button',
-        ['url' => 'https://chad-movies.nikoloz.redberryinternship.ge/reset-password?token=' . $email . '&email=' . $token])
+        ['url' => config('app.frontend_url') . 'reset-password?token=' . $email . '&email=' . $token])
         Password Reset
     @endcomponent
 
