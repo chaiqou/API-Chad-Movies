@@ -26,7 +26,7 @@ class QuoteTest extends TestCase
 			'movie_id'       => $movie->id,
 		]);
 
-		$movie = Quote::first();
+		$quote = Quote::first();
 		$response->assertStatus(201);
 	}
 
