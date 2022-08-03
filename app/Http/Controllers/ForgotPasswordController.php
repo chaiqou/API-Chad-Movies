@@ -17,10 +17,14 @@ class ForgotPasswordController extends Controller
 	{
 		if (!$this->validateEmail($request->email))
 		{
-			return $this->failedResponse();
+			return response()->json([
+				'error' => 'Email does not exist.',
+			], 404);
 		}
 		$this->send($request->email);
-		return $this->successResponse();
+		return response()->json([
+			'data' => 'Reset Email is send successfully, please check your inbox.',
+		], 201);
 	}
 
 	public function send($email): void
@@ -55,19 +59,5 @@ class ForgotPasswordController extends Controller
 	public function validateEmail($email): bool
 	{
 		return (bool)User::where('email', $email)->first();
-	}
-
-	public function failedResponse(): JsonResponse
-	{
-		return response()->json([
-			'error' => 'Email does not exist.',
-		], 404);
-	}
-
-	public function successResponse(): JsonResponse
-	{
-		return response()->json([
-			'data' => 'Reset Email is send successfully, please check your inbox.',
-		], 201);
 	}
 }
