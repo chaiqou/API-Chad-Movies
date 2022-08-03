@@ -7,7 +7,6 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class NotificationEvent implements ShouldBroadcast
 {
@@ -32,13 +31,6 @@ class NotificationEvent implements ShouldBroadcast
 	public function broadcastWith()
 	{
 		return  ['message' => $this->comment, 'user' => $this->comment->user->id, 'commentBy' => $this->comment->user->name];
-	}
-
-	public function toBroadcast($notifiable)
-	{
-		return new BroadcastMessage([
-			'message' => $this->comment,
-		]);
 	}
 
 	/**
