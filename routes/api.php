@@ -9,7 +9,6 @@ use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\VerificationController;
 use App\Http\Controllers\ForgotPasswordController;
@@ -39,7 +38,6 @@ use App\Http\Controllers\Auth\SocialAuthController;
 Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
-	Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('verified');
 	Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
 	Route::get('movie-slug/{id}', [MovieController::class, 'showBySlug'])->name('movie.getBySlug');
 	Route::apiResource('movies', MovieController::class);
