@@ -11,11 +11,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class QuoteFactory extends Factory
 {
-	/**
-	 * Define the model's default state.
-	 *
-	 * @return array<string, mixed>
-	 */
 	public function definition()
 	{
 		return [
@@ -24,12 +19,8 @@ class QuoteFactory extends Factory
 				'ka' => $this->faker->sentence,
 			],
 			'thumbnail' => $this->faker->imageUrl(),
-			'movie_id'  => function () {
-				return Movie::all()->random();
-			},
-			'user_id'   => function () {
-				return User::all()->random();
-			},
+			'movie_id'  => Movie::factory()->create()->id,
+			'user_id'   => User::factory()->create()->id,
 		];
 	}
 }

@@ -64,7 +64,7 @@ class QuoteController extends Controller
 			return response()->json(['error' => 'Unauthorized user'], 401);
 		}
 		$quote->delete();
-		return response()->json(['success' => 'quote deleted'], 204);
+		return response()->json(['success' => true, 'message' => 'quote deleted'], 204);
 	}
 
 	private function saveImage($image): string

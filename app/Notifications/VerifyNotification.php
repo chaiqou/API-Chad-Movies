@@ -45,7 +45,7 @@ class VerifyNotification extends Notification
 			'hash' => sha1($notifiable->getEmailForVerification()),
 		];
 
-		$url = 'https://chad-movies.nikoloz.redberryinternship.ge/' . 'user-confirmed?';
+		$url = 'https://chad-movies.nikoloz.redberryinternship.ge/user-confirmed?';
 
 		foreach ($params as $key => $param)
 		{
