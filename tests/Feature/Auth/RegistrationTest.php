@@ -2,12 +2,38 @@
 
 namespace Tests\Feature\Auth;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegistrationTest extends TestCase
 {
 	use RefreshDatabase;
+
+	public function test_user_can_login()
+	{
+		$user = User::factory()->create();
+
+		$response = $this->post('/api/login', [
+			'email'    => $user->email,
+			'password' => 'password',
+		]);
+
+		$response->assertStatus(200);
+	}
+
+	public function test_user_can_logout()
+	{
+		User::factory()->create();
+		$user = User::first();
+		$token = JWTAuth::fromUser($user);
+
+		$this->post('api/logout?token=' . $token)
+			->assertStatus(200);
+
+		$this->assertGuest('api');
+	}
 
 	public function test_user_can_register()
 	{
