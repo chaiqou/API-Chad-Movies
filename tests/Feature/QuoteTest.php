@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Movie;
 use App\Models\Quote;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -14,13 +15,19 @@ class QuoteTest extends TestCase
 	public function test_user_can_add_quote()
 	{
 		$user = User::factory()->create();
-		$this->actingAs($user);
-		$response = $this->post(
-			'/api/quotes',
-			['quote_en' => 'quote_en', 'quote_ka' => 'quote_ka', 'movie_id' => 1, 'user_id' => 1, 'thumbnail' => 'thumbnail']
-		);
-		$quote = Quote::first();
-		$response->assertStatus(500);
+		$movie = Movie::factory()->create();
+		$this->actingAs($user, 'api');
+
+		$response = $this->post('/api/quotes', [
+			'quote_en'       => 'title',
+			'quote_ka'       => 'title',
+			'thumbnail'      => 'thumbnail',
+			'user_id'        => $user->id,
+			'movie_id'       => $movie->id,
+		]);
+
+		$movie = Quote::first();
+		$response->assertStatus(201);
 	}
 
 	public function test_user_can_show_quote()

@@ -16,6 +16,7 @@ class MovieTest extends TestCase
 	{
 		$user = User::factory()->create();
 		$this->actingAs($user);
+
 		$response = $this->post('/api/movies', [
 			'title_en'       => 'title',
 			'title_ka'       => 'title',
