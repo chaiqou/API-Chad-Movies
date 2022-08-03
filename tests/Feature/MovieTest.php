@@ -31,7 +31,7 @@ class MovieTest extends TestCase
 			'budget'         => 32,
 		]);
 
-		$movie = \App\Models\Movie::first();
+		$movie = Movie::first();
 		$response->assertStatus(201);
 	}
 
@@ -49,15 +49,4 @@ class MovieTest extends TestCase
 		$movie = Movie::factory()->create(['user_id' => $user->id]);
 		$this->assertTrue($movie->user->is($user));
 	}
-
-	// public function test_user_can_destroy_movie()
-	// {
-	// 	$this->withoutMiddleware();
-	// 	$user = User::factory()->create();
-	// 	$this->actingAs($user);
-	// 	$response = $this->delete(
-	// 		'/api/movies/1'
-	// 	);
-	// 	$response->assertStatus(204);
-	// }
 }

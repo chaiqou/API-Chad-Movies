@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Genre;
 use Illuminate\Database\Seeder;
 
 class GenreSeeder extends Seeder
@@ -40,7 +41,7 @@ class GenreSeeder extends Seeder
 
 		foreach ($genres as $genre)
 		{
-			\App\Models\Genre::create([
+			Genre::create([
 				'name' => $genre,
 			]);
 		}
