@@ -9,7 +9,7 @@ use Illuminate\Http\JsonResponse;
 
 class UpdatePasswordController extends Controller
 {
-	public function updatePassword(UpdatePasswordRequest $request)
+	public function updatePassword(UpdatePasswordRequest $request): JsonResponse
 	{
 		return $this->updatePasswordRow($request)->count() > 0 ? $this->resetPassword($request) : $this->tokenNotFoundError();
 	}

@@ -34,9 +34,10 @@ class CommentController extends Controller
 		return new CommentResource($comment);
 	}
 
-	public function destroy(Quote $quote, Comment $comment)
+	public function destroy(Quote $quote, Comment $comment): JsonResponse
 	{
 		$comment->delete();
-		return response(null, 204);
+
+		return response()->json(['message' => 'Comment deleted']);
 	}
 }
