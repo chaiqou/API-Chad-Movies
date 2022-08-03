@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class RegistrationTest extends TestCase
+class AuthenticationTest extends TestCase
 {
 	use RefreshDatabase;
 
@@ -19,6 +19,29 @@ class RegistrationTest extends TestCase
 			'email'    => $user->email,
 			'password' => 'password',
 		]);
+
+		$response->assertStatus(200);
+	}
+
+	public function test_user_cant_login()
+	{
+		$user = User::factory()->create();
+
+		$response = $this->post('/api/login', [
+			'email'    => $user->email,
+			'password' => 'wrong-password',
+		]);
+
+		$response->assertStatus(401);
+	}
+
+	public function test_user_check_token()
+	{
+		User::factory()->create();
+		$user = User::first();
+		$token = JWTAuth::fromUser($user);
+
+		$response = $this->post('/api/checkToken' . '?token=' . $token);
 
 		$response->assertStatus(200);
 	}

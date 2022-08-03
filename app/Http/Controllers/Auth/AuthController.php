@@ -17,11 +17,6 @@ class AuthController extends Controller
 
 		$credentials = $request->only('email', 'password');
 
-		if ($request->remember_token === true)
-		{
-			JWTAuth::factory()->setTTL(999999);
-		}
-
 		if (!$token = JWTAuth::attempt($credentials))
 		{
 			return response()->json(['success' => false, 'message' => 'Email or Password is inccorect'], 401);
@@ -55,16 +50,6 @@ class AuthController extends Controller
 		return response()->json([
 			'message' => 'User created successfully!',
 			'success' => true, ]);
-	}
-
-	public function authenticatedUser(): JsonResponse
-	{
-		return response()->json(auth()->user());
-	}
-
-	public function refresh(): JsonResponse
-	{
-		return $this->respondWithToken(auth()->refresh());
 	}
 
 	protected function respondWithToken($token): JsonResponse

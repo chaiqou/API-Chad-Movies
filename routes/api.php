@@ -38,8 +38,6 @@ use App\Http\Controllers\Auth\SocialAuthController;
 
 Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
-	Route::post('refresh', [AuthController::class, 'refresh'])->name('user.refresh');
-	Route::post('authenticatedUser', [AuthController::class, 'authenticatedUser'])->name('user.authenticated');
 	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
 	Route::post('dashboard', [DashboardController::class, 'index'])->name('user.dashboard')->middleware('verified');
 	Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
