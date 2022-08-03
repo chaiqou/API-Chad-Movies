@@ -79,6 +79,16 @@ class MovieTest extends TestCase
 		$response->assertStatus(401);
 	}
 
+	public function test_user_can_see_movie()
+	{
+		$user = User::factory()->create();
+		$this->actingAs($user);
+		$response = $this->get(
+			'/api/movies'
+		);
+		$response->assertStatus(200);
+	}
+
 	public function test_user_can_show_movie()
 	{
 		$user = User::factory()->create();

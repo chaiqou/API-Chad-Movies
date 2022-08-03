@@ -30,13 +30,23 @@ class QuoteTest extends TestCase
 		$response->assertStatus(201);
 	}
 
-	public function test_user_can_show_quote()
+	public function test_user_can_see_quote()
 	{
-		$this->withoutMiddleware();
 		$user = User::factory()->create();
 		$this->actingAs($user);
 		$response = $this->get(
-			'/api/quotes/1'
+			'/api/quotes'
+		);
+		$response->assertStatus(200);
+	}
+
+	public function test_user_can_show_quote()
+	{
+		$user = User::factory()->create();
+		$quote = Quote::factory()->create();
+		$this->actingAs($user);
+		$response = $this->get(
+			'/api/quotes/' . $quote->id
 		);
 		$response->assertStatus(200);
 	}
