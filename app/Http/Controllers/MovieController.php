@@ -49,17 +49,6 @@ class MovieController extends Controller
 		return new MovieResource($movie);
 	}
 
-	public function show(Movie $movie, Request $request): JsonResponse
-	{
-		$user = $request->user();
-		if ($user->id !== $movie->user_id)
-		{
-			return response()->json(['error' => 'Unauthorized user'], 401);
-		}
-
-		return new MovieResource($movie);
-	}
-
 	public function showBySlug(Movie $movie, Request $request): MovieResource
 	{
 		$movies = Movie::where('id', $request->id)->with('quotes')->get();

@@ -11,16 +11,6 @@ use Illuminate\Http\JsonResponse;
 
 class AuthController extends Controller
 {
-	/**
-	 * Create a new AuthController instance.
-	 *
-	 * @return void
-	 */
-	public function __construct()
-	{
-		$this->middleware('auth:api', ['except' => ['login', 'register']]);
-	}
-
 	public function login(Request $request)
 	{
 		$user = User::where('email', $request['email'])->where('email_verified_at', '<>', null)->firstOrFail();

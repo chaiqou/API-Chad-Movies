@@ -45,4 +45,22 @@ class QuoteTest extends TestCase
 		);
 		$response->assertStatus(200);
 	}
+
+	public function test_user_can_delete_quote()
+	{
+		$user = User::factory()->create();
+		$quote = Quote::factory()->create(['user_id' => $user->id]);
+		$this->actingAs($user);
+		$response = $this->delete('/api/quotes/1');
+		$response->assertStatus(204);
+	}
+
+	public function test_user_cant_delete_quote()
+	{
+		$user = User::factory()->create();
+		$quote = Quote::factory()->create();
+		$this->actingAs($user);
+		$response = $this->delete('/api/quotes/1');
+		$response->assertStatus(401);
+	}
 }

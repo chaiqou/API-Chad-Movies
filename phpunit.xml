@@ -35,6 +35,9 @@
            <directory>
            ./app/Helpers
            </directory>
+            <directory>
+           ./app/Http/Controllers/Auth/SocialAuthController.php
+           </directory>
         </exclude>
   </coverage>
     <php>

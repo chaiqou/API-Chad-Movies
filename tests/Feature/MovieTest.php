@@ -35,6 +35,59 @@ class MovieTest extends TestCase
 		$response->assertStatus(201);
 	}
 
+	public function test_user_can_update_movie()
+	{
+		$this->withoutMiddleware();
+		$user = User::factory()->create();
+		$this->actingAs($user);
+		$response = $this->put(
+			'/api/movies/1',
+			[
+				'title_en'       => 'title',
+				'title_ka'       => 'title',
+				'director_en'    => 'director',
+				'director_ka'    => 'director',
+				'description_en' => 'description',
+				'description_ka' => 'description',
+				'genre'          => 'genre',
+				'slug'           => 'slug',
+				'thumbnail'      => 'thumbnail',
+				'year'           => 3232,
+				'user_id'        => 1,
+				'budget'         => 32,
+			]
+		);
+		$response->assertStatus(200);
+	}
+
+	public function test_user_can_delete_movie()
+	{
+		$user = User::factory()->create();
+		$movie = Movie::factory()->create(['user_id' => $user->id]);
+		$this->actingAs($user);
+		$response = $this->delete('/api/movies/1');
+		$response->assertStatus(204);
+	}
+
+	public function test_user_cant_delete_movie()
+	{
+		$user = User::factory()->create();
+		$movie = Movie::factory()->create();
+		$this->actingAs($user);
+		$response = $this->delete('/api/movies/1');
+		$response->assertStatus(401);
+	}
+
+	public function test_user_can_show_movie()
+	{
+		$user = User::factory()->create();
+		$this->actingAs($user);
+		$response = $this->get(
+			'/api/movie-slug/1'
+		);
+		$response->assertStatus(200);
+	}
+
 	public function test_movie_has_many_quotes()
 	{
 		$user = User::factory()->create();

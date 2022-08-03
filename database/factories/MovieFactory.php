@@ -30,9 +30,7 @@ class MovieFactory extends Factory
 			'slug'           => $this->faker->slug,
 			'budget'         => $this->faker->numberBetween(1, 1000000),
 			'thumbnail'      => $this->faker->imageUrl(),
-			'user_id'        => function () {
-				return User::all()->random();
-			},
+			'user_id'        => User::factory()->create()->id,
 		];
 	}
 }
