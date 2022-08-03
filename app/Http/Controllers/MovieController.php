@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
+use App\Helpers\Helper;
 use App\Models\Movie;
 use Illuminate\Http\Request;
 use App\Http\Requests\MovieRequest;
-use Illuminate\Support\Facades\File;
 use App\Http\Resources\MovieResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -23,7 +22,7 @@ class MovieController extends Controller
 
 	public function store(MovieRequest $request): MovieResource
 	{
-		$image_path = $this->saveImage($request->thumbnail);
+		$image_path = Helper::saveImage($request->thumbnail);
 
 		$movie = Movie::create(
 			[
@@ -85,7 +84,7 @@ class MovieController extends Controller
 			'year'          => $request->year,
 			'budget'        => $request->budget,
 			'genre'         => $request->genre,
-			'thumbnail'     => $this->saveImage($request->thumbnail),
+			'thumbnail'     => Helper::saveImage($request->thumbnail),
 		]);
 		return new MovieResource($movie);
 	}
@@ -99,38 +98,5 @@ class MovieController extends Controller
 		}
 		$movie->delete();
 		return response()->json(['success' => 'Movie deleted'], 204);
-	}
-
-	private function saveImage($image): string
-	{
-		if (preg_match('/^data:image\/(\w+);base64,/', $image, $type))
-		{
-			$image = substr($image, strpos($image, ',') + 1);
-			$type = strtolower($type[1]);
-
-			if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png']))
-			{
-				throw new Exception('invalid image type');
-			}
-
-			$image = str_replace(' ', '+', $image);
-			$image = base64_decode($image);
-		}
-		else
-		{
-			return  $image;
-		}
-
-		$dir = 'images/';
-		$file_name = uniqid() . '.' . $type;
-		$absolutePath = public_path($dir);
-		$relativePath = $dir . $file_name;
-		if (!file_exists($absolutePath))
-		{
-			File::makeDirectory($absolutePath, 0775, true);
-		}
-		file_put_contents($relativePath, $image);
-
-		return $relativePath;
 	}
 }

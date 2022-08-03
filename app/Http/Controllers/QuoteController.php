@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helper;
 use App\Http\Requests\QuoteRequest;
-use Exception;
 use App\Models\Quote;
-use Illuminate\Support\Facades\File;
 use App\Http\Resources\QuoteResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,7 +21,7 @@ class QuoteController extends Controller
 
 	public function store(QuoteRequest $request): QuoteResource
 	{
-		$image_path = $this->saveImage($request->thumbnail);
+		$image_path = Helper::saveImage($request->thumbnail);
 
 		$quote = Quote::create(
 			[
@@ -51,7 +50,7 @@ class QuoteController extends Controller
 				'en' => $request->quote_en,
 				'ka' => $request->quote_ka,
 			],
-			'thumbnail' => $this->saveImage($request->thumbnail),
+			'thumbnail' => Helper::saveImage($request->thumbnail),
 		]);
 		return new QuoteResource($quote);
 	}
@@ -65,38 +64,5 @@ class QuoteController extends Controller
 		}
 		$quote->delete();
 		return response()->json(['success' => true, 'message' => 'quote deleted'], 204);
-	}
-
-	private function saveImage($image): string
-	{
-		if (preg_match('/^data:image\/(\w+);base64,/', $image, $type))
-		{
-			$image = substr($image, strpos($image, ',') + 1);
-			$type = strtolower($type[1]);
-
-			if (!in_array($type, ['jpg', 'jpeg', 'gif', 'png']))
-			{
-				throw new Exception('invalid image type');
-			}
-
-			$image = str_replace(' ', '+', $image);
-			$image = base64_decode($image);
-		}
-		else
-		{
-			return  $image;
-		}
-
-		$dir = 'images/';
-		$file_name = uniqid() . '.' . $type;
-		$absolutePath = public_path($dir);
-		$relativePath = $dir . $file_name;
-		if (!file_exists($absolutePath))
-		{
-			File::makeDirectory($absolutePath, 0775, true);
-		}
-		file_put_contents($relativePath, $image);
-
-		return $relativePath;
 	}
 }
