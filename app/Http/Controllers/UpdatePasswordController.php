@@ -13,7 +13,7 @@ class UpdatePasswordController extends Controller
 	{
 		if ($this->updatePasswordRow($request)->count() > 0)
 		{
-			$userData = User::whereEmail($request->email)->firstOrFail();
+			$userData = User::where('email', $request->email)->firstOrFail();
 
 			$userData->update([
 				'password'=> bcrypt($request->password),

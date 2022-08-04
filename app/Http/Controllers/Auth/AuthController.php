@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
 	public function login(Request $request)
 	{
-		$user = User::where('email', $request['email'])->where('email_verified_at', '<>', null)->firstOrFail();
+		$user = User::where([['email', $request['email']], ['email_verified_at', '<>', null]])->firstOrFail();
 
 		$credentials = $request->only('email', 'password');
 

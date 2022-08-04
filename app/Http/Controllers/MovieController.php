@@ -15,7 +15,7 @@ class MovieController extends Controller
 	public function index(Request $request): AnonymousResourceCollection
 	{
 		$user = auth()->user();
-		$movies = Movie::where('user_id', $user->id)->where('title', 'LIKE', '%' . $request->search . '%')->with('quotes')->get();
+		$movies = Movie::where([['user_id', $user->id], ['title', 'LIKE', '%' . $request->search . '%']])->with('quotes')->get();
 
 		return MovieResource::collection($movies);
 	}
