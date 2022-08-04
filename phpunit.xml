@@ -38,6 +38,9 @@
             <directory>
            ./app/Http/Controllers/Auth/SocialAuthController.php
            </directory>
+              <file>
+            ./app/Models/SocialAccount.php
+           </file>
         </exclude>
   </coverage>
     <php>

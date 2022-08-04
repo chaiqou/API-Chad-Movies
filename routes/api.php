@@ -44,7 +44,7 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::apiResource('users', UserController::class);
 	Route::apiResource('quotes', QuoteController::class);
 	Route::apiResource('quotes/{quote}/comment', CommentController::class);
-	Route::put('profile', [UserController::class, 'updateProfile'])->name('user.profile.update');
+	Route::put('profile', [UserController::class, 'update'])->name('user.profile.update');
 	Route::post('like/{quote}', [LikeController::class, 'like'])->name('quote.like');
 	Route::delete('like/{quote}', [LikeController::class, 'unlike'])->name('quote.unlike');
 	Route::post('notifications', [NotificationController::class, 'index'])->name('notification.index');

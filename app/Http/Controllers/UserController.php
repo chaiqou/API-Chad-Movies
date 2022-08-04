@@ -17,7 +17,7 @@ class UserController extends Controller
 		return new UserResource($users);
 	}
 
-	public function updateProfile(Request $request): JsonResponse
+	public function update(Request $request): JsonResponse
 	{
 		if ($request->profile_image != auth()->user()->profile_image)
 		{
