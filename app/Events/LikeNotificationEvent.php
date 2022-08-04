@@ -34,12 +34,12 @@ class LikeNotificationEvent implements ShouldBroadcast
 		return  ['message' => $this->like, 'user' => $this->like->user->id, 'likedBy' => $this->like->user->name];
 	}
 
-	public function toBroadcast($notifiable)
-	{
-		return new BroadcastMessage([
-			'message' => $this->like,
-		]);
-	}
+	// public function toBroadcast($notifiable)
+	// {
+	// 	return new BroadcastMessage([
+	// 		'message' => $this->like,
+	// 	]);
+	// }
 
 	/**
 	 * Get the channels the event should broadcast on.

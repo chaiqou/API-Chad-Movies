@@ -8,12 +8,9 @@ use App\Mail\SendMailreset;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ForgotPasswordTest extends TestCase
 {
-	use RefreshDatabase;
-
 	public function test_user_can_send_forgot_password_email()
 	{
 		$this->withoutExceptionHandling();

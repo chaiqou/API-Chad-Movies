@@ -6,12 +6,9 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\Movie;
 use App\Models\Quote;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class QuoteTest extends TestCase
 {
-	use RefreshDatabase;
-
 	public function test_user_can_add_quote()
 	{
 		$user = User::factory()->create();

@@ -2,10 +2,13 @@
 
 namespace Tests\Feature;
 
+use App\Events\CommentEvent;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Quote;
 use App\Models\Comment;
+use App\Notifications\NewCommentNotification;
+use Illuminate\Support\Facades\Notification;
 
 class CommentTest extends TestCase
 {
@@ -43,6 +46,47 @@ class CommentTest extends TestCase
 
 		$response->assertStatus(201);
 	}
+
+	public function test_gg_jj()
+	{
+		Quote::factory()->create();
+		User::factory()->create();
+		$quote = Quote::first();
+		$user = User::first();
+		$this->actingAs($user);
+		$comment = Comment::factory()->create(['user_id' => $user->id, 'quote_id' => $quote->id, 'body'     => 'comment']);
+
+		Notification::fake();
+
+		$event = new CommentEvent($comment);
+		event($event);
+
+		Notification::assertSentToTimes($user, NewCommentNotification::class, 0);
+	}
+
+	// public function test_user_can_create_comment_and_send_notification()
+	// {
+	// 	Quote::factory()->create();
+	// 	User::factory()->create();
+	// 	$quote = Quote::first();
+	// 	$user = User::first();
+	// 	$this->actingAs($user);
+	// 	$comment = Comment::factory()->create(['user_id' => $user->id, 'quote_id' => $quote->id, 'body'     => 'comment']);
+
+	// 	$this->actingAs($user);
+
+	// 	$response = $this->post(
+	// 		'/api/quotes/' . $quote->id . '/comment',
+	// 		[
+	// 			'body' => 'comment',
+	// 		]
+	// 	);
+
+	// 	Notification::fake();
+	// 	$user->notify(new NewCommentNotification($comment));
+
+	// 	$response->assertStatus(201);
+	// }
 
 	public function test_user_can_show_comment()
 	{

@@ -5,12 +5,9 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthenticationTest extends TestCase
 {
-	use RefreshDatabase;
-
 	public function test_user_can_login()
 	{
 		$user = User::factory()->create();

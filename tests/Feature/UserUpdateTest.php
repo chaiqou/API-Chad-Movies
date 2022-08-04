@@ -23,7 +23,8 @@ class UserUpdateTest extends TestCase
 		User::factory()->create();
 		$user = User::first();
 		$this->actingAs($user)->put('/api/users/1', [
-			'email' => 'lomtadzenikusha@gmail.com',
+			'email'         => 'lomtadzenikusha@gmail.com',
+			'profile_image' => 'https://via.placeholder.com/150',
 		])->assertStatus(200);
 	}
 
@@ -33,7 +34,8 @@ class UserUpdateTest extends TestCase
 		User::factory()->create();
 		$user = User::first();
 		$this->actingAs($user)->put('/api/users/1', [
-			'password' => '123456',
+			'password'      => '123456',
+			'profile_image' => 'https://via.placeholder.com/150',
 		])->assertStatus(200);
 	}
 
@@ -43,7 +45,8 @@ class UserUpdateTest extends TestCase
 		User::factory()->create();
 		$user = User::first();
 		$this->actingAs($user)->put('/api/users/1', [
-			'name' => 'nikoloz',
+			'name'          => 'nikoloz',
+			'profile_image' => 'https://via.placeholder.com/150',
 		])->assertStatus(200);
 	}
 }
