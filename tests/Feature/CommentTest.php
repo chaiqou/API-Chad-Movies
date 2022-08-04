@@ -31,6 +31,7 @@ class CommentTest extends TestCase
 	{
 		$user = User::factory()->create();
 		$quote = Quote::factory()->create();
+
 		$this->actingAs($user);
 
 		$response = $this->post(

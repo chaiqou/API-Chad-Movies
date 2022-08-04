@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-	public function verify(Request $request): JsonResponse
+	public function index(Request $request): JsonResponse
 	{
 		$user = User::findOrFail($request->id);
 

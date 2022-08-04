@@ -28,7 +28,7 @@ use App\Http\Controllers\Auth\SocialAuthController;
 
 	Route::post('register', [AuthController::class, 'register'])->name('user.register');
 	Route::post('login', [AuthController::class, 'login'])->name('user.login');
-	Route::get('email-verification', [VerificationController::class, 'verify'])->name('verification.verify');
+	Route::get('email-verification', [VerificationController::class, 'index'])->name('verification.verify');
 	Route::get('authorize/google/redirect', [SocialAuthController::class, 'redirectToProvider'])->name('user.social.register');
 	Route::get('authorize/google/callback', [SocialAuthController::class, 'handleProviderCallback'])->name('user.social.callback');
 	Route::post('forgot-password', [ForgotPasswordController::class, 'sendEmail'])->name('user.forgot-password');
