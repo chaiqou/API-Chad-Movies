@@ -41,6 +41,9 @@
               <file>
             ./app/Models/SocialAccount.php
            </file>
+           <file>
+           ./app/Http/Kernel.php
+           </file>
         </exclude>
   </coverage>
     <php>
