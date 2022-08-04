@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Events\LikeEvent;
 use App\Http\Resources\LikeResource;
+use App\Http\Resources\NotificationResource;
 use Tests\TestCase;
 use App\Models\Like;
 use App\Models\User;
@@ -66,6 +67,13 @@ class LikeTest extends TestCase
 	{
 		$like = Like::factory()->create();
 		$collect = LikeResource::collection(Like::all())->resolve();
+		$this->assertCount(1, $collect);
+	}
+
+	public function test_notification_resource()
+	{
+		$like = Like::factory()->create();
+		$collect = NotificationResource::collection(Like::all())->resolve();
 		$this->assertCount(1, $collect);
 	}
 }
