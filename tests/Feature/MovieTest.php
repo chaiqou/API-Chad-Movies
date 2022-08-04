@@ -63,7 +63,7 @@ class MovieTest extends TestCase
 		$user = User::factory()->create();
 		$movie = Movie::factory()->create(['user_id' => $user->id]);
 		$this->actingAs($user);
-		$response = $this->delete('/api/movies/1');
+		$response = $this->delete('/api/movies/' . $movie->id);
 		$response->assertStatus(204);
 	}
 
@@ -72,7 +72,7 @@ class MovieTest extends TestCase
 		$user = User::factory()->create();
 		$movie = Movie::factory()->create();
 		$this->actingAs($user);
-		$response = $this->delete('/api/movies/1');
+		$response = $this->delete('/api/movies/' . $movie->id);
 		$response->assertStatus(401);
 	}
 

@@ -65,7 +65,7 @@ class QuoteTest extends TestCase
 		$user = User::factory()->create();
 		$quote = Quote::factory()->create(['user_id' => $user->id]);
 		$this->actingAs($user);
-		$response = $this->delete('/api/quotes/1');
+		$response = $this->delete('/api/quotes/' . $quote->id);
 		$response->assertStatus(204);
 	}
 
@@ -74,7 +74,7 @@ class QuoteTest extends TestCase
 		$user = User::factory()->create();
 		$quote = Quote::factory()->create();
 		$this->actingAs($user);
-		$response = $this->delete('/api/quotes/1');
+		$response = $this->delete('/api/quotes/' . $quote->id);
 		$response->assertStatus(401);
 	}
 }

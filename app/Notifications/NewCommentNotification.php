@@ -37,22 +37,22 @@ class NewCommentNotification extends Notification implements ShouldBroadcast
 		return ['database', 'broadcast'];
 	}
 
-	/**
-	 * Get the array representation of the notification.
-	 *
-	 * @param mixed $notifiable
-	 *
-	 * @return array
-	 */
-	public function toArray($notifiable)
-	{
-		return [
-			'commentBy'    => $this->comment->user->name,
-			'comment'      => $this->comment->body,
-			'created_at'   => $this->comment->created_at->diffForHumans(),
-			'id'           => $this->comment->id,
-		];
-	}
+	// /**
+	//  * Get the array representation of the notification.
+	//  *
+	//  * @param mixed $notifiable
+	//  *
+	//  * @return array
+	//  */
+	// public function toArray($notifiable)
+	// {
+	// 	return [
+	// 		'commentBy'    => $this->comment->user->name,
+	// 		'comment'      => $this->comment->body,
+	// 		'created_at'   => $this->comment->created_at->diffForHumans(),
+	// 		'id'           => $this->comment->id,
+	// 	];
+	// }
 
 	/**
 	 * Get the broadcastable representation of the notification.

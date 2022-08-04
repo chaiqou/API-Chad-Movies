@@ -36,21 +36,22 @@ class NewLikeNotification extends Notification implements ShouldBroadcast
 		return ['database', 'broadcast'];
 	}
 
-	/**
-	 * Get the array representation of the notification.
-	 *
-	 * @param mixed $notifiable
-	 *
-	 * @return array
-	 */
-	public function toArray($notifiable)
-	{
-		return [
-			'likedBy'     => $this->like->user->name,
-			'id'          => $this->like->id,
-			'created_at'  => $this->like->created_at->diffForHumans(),
-		];
-	}
+	// tse
+	// /**
+	//  * Get the array representation of the notification.
+	//  *
+	//  * @param mixed $notifiable
+	//  *
+	//  * @return array
+	//  */
+	// public function toArray($notifiable)
+	// {
+	// 	return [
+	// 		'likedBy'     => $this->like->user->name,
+	// 		'id'          => $this->like->id,
+	// 		'created_at'  => $this->like->created_at->diffForHumans(),
+	// 	];
+	// }
 
 	/**
 	 * Get the broadcastable representation of the notification.
