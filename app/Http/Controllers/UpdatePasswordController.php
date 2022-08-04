@@ -11,24 +11,7 @@ class UpdatePasswordController extends Controller
 {
 	public function updatePassword(UpdatePasswordRequest $request): JsonResponse
 	{
-		if ($this->updatePasswordRow($request)->count() > 0)
-		{
-			$userData = User::where('email', $request->email)->firstOrFail();
-
-			$userData->update([
-				'password'=> bcrypt($request->password),
-			]);
-
-			$this->updatePasswordRow($request)->delete();
-
-			return response()->json([
-				'data'=> 'Your password has been updated <3.',
-			], 200);
-		}
-		else
-		{
-			return $this->tokenNotFoundError();
-		}
+		return  $this->resetPassword($request);
 	}
 
 	private function updatePasswordRow($request)
@@ -39,10 +22,18 @@ class UpdatePasswordController extends Controller
 		]);
 	}
 
-	private function tokenNotFoundError(): JsonResponse
+	private function resetPassword($request): JsonResponse
 	{
+		$userData = User::whereEmail($request->email)->first();
+
+		$userData->update([
+			'password'=> bcrypt($request->password),
+		]);
+
+		$this->updatePasswordRow($request)->delete();
+
 		return response()->json([
-			'error' => 'you have entered wrong token or email',
-		], 404);
+			'data'=> 'Your password has been updated <3.',
+		], 200);
 	}
 }

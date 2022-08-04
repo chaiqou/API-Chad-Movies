@@ -35,19 +35,23 @@ class UpdatePasswordTest extends TestCase
 	public function test_user_can_save_new_password_in_database()
 	{
 		$this->withoutExceptionHandling();
+
 		Mail::fake();
 
 		$user = User::factory()->create(
-			['email' => 'lomtadzenikusha@gmail.com']
+			[
+				'email'    => 'user@domain.com',
+				'password' => Hash::make('oldpassword'),
+			]
 		);
 
-		$this->actingAs($user);
+		$token = Password::createToken(User::first());
 
 		$response = $this->post(route('user.reset-password'), [
-			'email'                              => $user->email,
-			'resetToken'                         => $user->resetToken,
-			'password'                           => 'newpassword',
-			'password_confirmation'              => 'newpassword',
+			'password'                        => 'newpassword',
+			'password_confirmation'           => 'newpassword',
+			'email'                           => $user->email,
+			'token'                           => $token,
 		]);
 
 		Mail::to('lomtadzenikusha@gmail.com')->send(new SendMailreset('lomtadzenikusha@gmail.com', 'token'));
