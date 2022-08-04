@@ -11,7 +11,7 @@ class Like extends Model
 
 	protected $fillable = ['user_id', 'quote_id'];
 
-	public function quotes()
+	public function quote()
 	{
 		return $this->belongsTo(Quote::class);
 	}

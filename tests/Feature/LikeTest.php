@@ -46,4 +46,18 @@ class LikeTest extends TestCase
 
 		Event::assertDispatched(LikeEvent::class);
 	}
+
+	public function test_like_belongs_to_user()
+	{
+		$user = User::factory()->create();
+		$like = Like::factory()->create(['user_id' => $user->id]);
+		$this->assertTrue($like->user->is($user));
+	}
+
+	public function test_like_belongs_to_quote()
+	{
+		$quote = Quote::factory()->create();
+		$like = Like::factory()->create(['quote_id' => $quote->id]);
+		$this->assertTrue($like->quote->is($quote));
+	}
 }

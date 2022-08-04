@@ -14,12 +14,8 @@ class LikeFactory extends Factory
 	public function definition()
 	{
 		return [
-			'user_id'        => function () {
-				return User::all()->random();
-			},
-			'quote_id'        => function () {
-				return Quote::all()->random();
-			},
+			'user_id'        => User::factory()->create()->id,
+			'quote_id'       => Quote::factory()->create()->id,
 		];
 	}
 }
