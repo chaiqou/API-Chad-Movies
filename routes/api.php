@@ -35,6 +35,7 @@ use App\Http\Controllers\Auth\SocialAuthController;
 	Route::get('email-verification', [VerificationController::class, 'index'])->name('verification.verify');
 	Route::post('forgot-password', [ForgotPasswordController::class, 'sendEmail'])->name('user.forgot-password');
 	Route::post('reset-password', [UpdatePasswordController::class, 'updatePassword'])->name('user.reset-password');
+	Route::get('search', [SearchController::class, 'search'])->name('user.search');
 
 Route::group(['middleware' => ['auth:api']], function () {
 	Route::apiResource('movies', MovieController::class);
@@ -57,6 +58,4 @@ Route::group(['middleware' => ['auth:api']], function () {
 	Route::post('notifications', [NotificationController::class, 'index'])->name('notification.index');
 	Route::post('markAsRead', [NotificationController::class, 'read'])->name('notification.read');
 	Route::post('markAllAsRead', [NotificationController::class, 'readAll'])->name('notification.readAll');
-
-	Route::get('search', [SearchController::class, 'search'])->name('user.search');
 });
