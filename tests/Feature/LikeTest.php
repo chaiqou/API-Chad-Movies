@@ -2,14 +2,16 @@
 
 namespace Tests\Feature;
 
-use App\Events\LikeEvent;
-use App\Http\Resources\LikeResource;
-use App\Http\Resources\NotificationResource;
 use Tests\TestCase;
 use App\Models\Like;
 use App\Models\User;
 use App\Models\Quote;
+use App\Events\LikeEvent;
+use App\Http\Resources\LikeResource;
 use Illuminate\Support\Facades\Event;
+use App\Http\Resources\NotificationResource;
+use App\Notifications\NewLikeNotification;
+use Illuminate\Support\Facades\Notification;
 
 class LikeTest extends TestCase
 {
@@ -24,11 +26,19 @@ class LikeTest extends TestCase
 		$like = $quote->like()->where('user_id', $user->id)->first();
 
 		Event::fake();
-		$this->actingAs($user)
-			->post('/api/like/' . $quote->id)
-			->assertStatus(200);
 
-		Event::assertDispatched(LikeEvent::class);
+		$response = $this->actingAs($user)
+			->post('/api/like/' . $quote->id);
+
+		Notification::fake();
+		$user->notify(new NewLikeNotification($like));
+
+		$this->assertDatabaseHas('likes', [
+			'user_id'  => $user->id,
+			'quote_id' => $quote->id,
+		]);
+
+		$response->assertStatus(200);
 	}
 
 	public function test_user_can_unlike_quote()
@@ -42,6 +52,7 @@ class LikeTest extends TestCase
 		$like = $quote->like()->where('user_id', $user->id)->first();
 
 		Event::fake();
+
 		$this->actingAs($user)
 			->delete('/api/like/' . $quote->id)
 			->assertStatus(200);

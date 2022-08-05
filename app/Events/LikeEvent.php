@@ -30,9 +30,9 @@ class LikeEvent implements ShouldBroadcast
 	/**
 	 * Get the channels the event should broadcast on.
 	 *
-	 * @return \Illuminate\Broadcasting\Channel|array
+	 * @codeCoverageIgnore
 	 */
-	public function broadcastOn()
+	public function broadcastOn(): Channel
 	{
 		return new Channel('like');
 	}

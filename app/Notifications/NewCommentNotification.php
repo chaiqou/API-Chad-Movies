@@ -42,9 +42,9 @@ class NewCommentNotification extends Notification implements ShouldBroadcast
 	 *
 	 * @param mixed $notifiable
 	 *
-	 * @return BroadcastMessage
+	 * @codeCoverageIgnore
 	 */
-	public function toBroadcast($notifiable)
+	public function toBroadcast($notifiable): BroadcastMessage
 	{
 		return new BroadcastMessage([
 			'commentBy'       => $this->comment->user->name,

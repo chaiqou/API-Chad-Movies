@@ -2,12 +2,12 @@
 
 namespace App\Events;
 
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 
 class LikeNotificationEvent implements ShouldBroadcast
 {
@@ -29,24 +29,20 @@ class LikeNotificationEvent implements ShouldBroadcast
 		$this->dontBroadcastToCurrentUser();
 	}
 
+	/**
+	 * @codeCoverageIgnore
+	 */
 	public function broadcastWith()
 	{
 		return  ['message' => $this->like, 'user' => $this->like->user->id, 'likedBy' => $this->like->user->name];
 	}
 
-	// public function toBroadcast($notifiable)
-	// {
-	// 	return new BroadcastMessage([
-	// 		'message' => $this->like,
-	// 	]);
-	// }
-
 	/**
 	 * Get the channels the event should broadcast on.
 	 *
-	 * @return \Illuminate\Broadcasting\Channel|array
+	 * @codeCoverageIgnore
 	 */
-	public function broadcastOn()
+	public function broadcastOn(): Channel
 	{
 		return new PrivateChannel('likeNotification.' . $this->quote->user_id);
 	}
