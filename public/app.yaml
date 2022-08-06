@@ -245,11 +245,170 @@ paths:
         - bearerAuth: []
       parameters:
         - in: path
-          name: id
+          name: movie
           schema:
             type: integer
           required: true
           description: Numeric ID of the movie
       responses:
         "201":
+          description: Okay.
+    put:
+      summary: User can update movie
+      security:
+        - bearerAuth: []
+      responses:
+        "201":
+          description: Movie updated successfully.
+      parameters:
+        - in: path
+          name: movie
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the movie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title_en:
+                  type: string
+                  example: Sherekilebi
+                title_ka:
+                  type: string
+                  example: შერეკილები
+                director_en:
+                  type: string
+                  example: Ermalo
+                director_ka:
+                  type: string
+                  example: ერმალო
+                genre:
+                  type: string
+                  example: Horror
+                description_en:
+                  type: string
+                  example: Mdzafri
+                description_ka:
+                  type: string
+                  example: მძაფრი
+                year:
+                  type: integer
+                  example: 1999
+                budget:
+                  type: integer
+                  example: 2394232
+                thumbnail:
+                  type: string
+                  example: base
+    delete:
+      summary: Delete single movie
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: movie
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the movie
+      responses:
+        "204":
+          description: Okay.
+
+  /quotes:
+    post:
+      summary: User can add quote
+      security:
+        - bearerAuth: []
+      responses:
+        "201":
+          description: quote added successfully.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quote_en:
+                  type: string
+                  example: quote
+                quote_ka:
+                  type: string
+                  example: ციტატა
+                movie_id:
+                  type: integer
+                  example: 1
+                thumbnail:
+                  type: string
+                  example: base
+    get:
+      summary: Return quotes array
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Okay.
+  /quotes/{quote}:
+    get:
+      summary: Show single quote
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: quote
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the quote
+      responses:
+        "201":
+          description: Okay.
+    put:
+      summary: User can update quote
+      security:
+        - bearerAuth: []
+      responses:
+        "201":
+          description: quote updated successfully.
+      parameters:
+        - in: path
+          name: quote
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the quote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quote_en:
+                  type: string
+                  example: newquote
+                quote_ka:
+                  type: string
+                  example: ახალიციტატა
+                thumbnail:
+                  type: string
+                  example: base
+    delete:
+      summary: Delete single quote
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: quote
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the quote
+      responses:
+        "204":
           description: Okay.
