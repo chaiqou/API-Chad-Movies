@@ -67,6 +67,24 @@ class MovieTest extends TestCase
 		$response->assertStatus(204);
 	}
 
+	public function test_user_can_show_single_movie()
+	{
+		$user = User::factory()->create();
+		$movie = Movie::factory()->create(['user_id' => $user->id]);
+		$this->actingAs($user);
+		$response = $this->get('/api/movies/' . $movie->id);
+		$response->assertStatus(200);
+	}
+
+	public function test_user_cant_show_single_movie_if_user_id_doesnot_match_movie_user_id()
+	{
+		$user = User::factory()->create();
+		$movie = Movie::factory()->create();
+		$this->actingAs($user);
+		$response = $this->get('/api/movies/' . $movie->id);
+		$response->assertStatus(401);
+	}
+
 	public function test_user_cant_delete_movie()
 	{
 		$user = User::factory()->create();

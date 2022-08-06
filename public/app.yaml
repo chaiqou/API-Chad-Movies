@@ -35,6 +35,7 @@ paths:
                   type: string
                 password:
                   type: string
+
   /register:
     post:
       summary: User registration
@@ -56,12 +57,14 @@ paths:
                   type: string
                 password_confirmation:
                   type: string
+
   /authorize/google/redirect:
     get:
       summary: Google redirect url
       responses:
         "200":
           description: Google callback.
+
   /authorize/google/callback:
     get:
       responses:
@@ -73,6 +76,7 @@ paths:
           required: true
           schema:
             type: string
+
   /email-verification:
     get:
       summary: Email verification.
@@ -90,6 +94,7 @@ paths:
       responses:
         "200":
           description: OK
+
   /forgot-password:
     post:
       summary: User forgot password
@@ -105,6 +110,7 @@ paths:
               properties:
                 email:
                   type: string
+
   /reset-password:
     post:
       summary: User reset password
@@ -124,6 +130,7 @@ paths:
                   type: string
                 password_confirmation:
                   type: string
+
   /logout:
     post:
       summary: User logout
@@ -132,6 +139,7 @@ paths:
       responses:
         "200":
           description: Successfully logged out.
+
   /checkToken:
     post:
       summary: User can check bearer token validation
@@ -140,6 +148,7 @@ paths:
       responses:
         "200":
           description: Okay
+
   /notifications:
     post:
       summary: Return read and unread notification arrays
@@ -148,6 +157,7 @@ paths:
       responses:
         "200":
           description: Return read and unread notification arrays
+
   /markAsRead:
     post:
       summary: Mark notification read
@@ -156,6 +166,7 @@ paths:
       responses:
         "200":
           description: Notification read
+
   /markAllAsRead:
     post:
       summary: Mark all notification read
@@ -164,6 +175,7 @@ paths:
       responses:
         "200":
           description: All notifications read
+
   /profile:
     put:
       summary: Update user profile
@@ -172,6 +184,7 @@ paths:
       responses:
         "200":
           description: Profile updated successfully
+
   /movies:
     post:
       summary: User can add movie
@@ -217,3 +230,26 @@ paths:
                 thumbnail:
                   type: string
                   example: base
+    get:
+      summary: Return movies array
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Okay.
+
+  /movies/{movie}:
+    get:
+      summary: Show single movie
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the movie
+      responses:
+        "201":
+          description: Okay.
