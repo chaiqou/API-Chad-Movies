@@ -415,9 +415,73 @@ paths:
 
   /users:
     get:
-      summary: Return quotes array
+      summary: Return users array
       security:
         - bearerAuth: []
       responses:
         "200":
           description: Okay.
+
+  /genres:
+    get:
+      summary: Return genres array
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Okay.
+
+  /movie-slug/{id}:
+    get:
+      summary: Show single movie by slug
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the movie
+      responses:
+        "201":
+          description: Okay.
+
+  /search:
+    get:
+      summary: Return searched quotes
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Okay.
+
+  /like/{quote}:
+    post:
+      summary: Like quote
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: quote
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the quote
+      responses:
+        "200":
+          description: Quote liked successfully.
+    delete:
+      summary: Unlike quote
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: quote
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the quote
+      responses:
+        "200":
+          description: Quote unliked successfully.
