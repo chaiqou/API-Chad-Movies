@@ -13,14 +13,6 @@ class VerificationController extends Controller
 	{
 		$user = User::findOrFail($request->id);
 
-		if (!hash_equals($request->hash, sha1($user->getEmailForVerification())))
-		{
-			return response()->json([
-				'message' => 'Unauthorized user, please verify your accont',
-				'success' => false,
-			]);
-		}
-
 		if ($user->hasVerifiedEmail())
 		{
 			return response()->json([

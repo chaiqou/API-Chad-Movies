@@ -75,16 +75,18 @@ paths:
             type: string
   /email-verification:
     get:
-      summary: Returns a user by ID.
+      summary: Email verification.
       parameters:
-        - name: use
-          in: path
-          required: true
-          description: Parameter description in CommonMark or HTML.
+        - in: query
+          name:
+          schema:
+            type: string
+          description: The number of items to skip before starting to collect the result set
+        - in: query
+          name: limit
           schema:
             type: integer
-            format: int64
-            minimum: 1
+          description: The numbers of items to return
       responses:
         "200":
           description: OK

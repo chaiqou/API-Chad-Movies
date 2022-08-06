@@ -48,21 +48,4 @@ class VerificationTest extends TestCase
 				'message' => 'User already verified!',
 			]);
 	}
-
-	public function test_user_cant_verify_email_with_wrong_hash()
-	{
-		$user = User::factory()->create([
-			'email_verified_at' => null,
-		]);
-
-		$this->get(route('verification.verify', [
-			'id'   => $user->id,
-			'hash' => sha1($user->getEmailForVerification() . 'wrong'),
-		]))
-			->assertStatus(200)
-			->assertJson([
-				'success' => false,
-				'message' => 'Unauthorized user, please verify your accont',
-			]);
-	}
 }
