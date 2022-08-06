@@ -38,10 +38,10 @@ use App\Http\Controllers\Auth\SocialAuthController;
 
 Route::group(['middleware' => ['auth:api']], function () {
 	Route::apiResource('movies', MovieController::class);
-	Route::apiResource('users', UserController::class);
 	Route::apiResource('quotes', QuoteController::class);
 	Route::apiResource('quotes/{quote}/comment', CommentController::class);
 
+	Route::get('users', [UserController::class, 'index'])->name('user.index');
 	Route::post('logout', [AuthController::class, 'logout'])->name('user.logout');
 	Route::post('checkToken', [AuthController::class, 'checkToken'])->name('user.checkToken');
 
