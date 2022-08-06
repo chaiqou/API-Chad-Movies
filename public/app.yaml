@@ -485,3 +485,43 @@ paths:
       responses:
         "200":
           description: Quote unliked successfully.
+
+  /quotes/{quote}/comment:
+    get:
+      summary: Show single quote comment
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: quote
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the quote
+      responses:
+        "201":
+          description: Okay.
+    post:
+      summary: Write new comment to appropiate quote
+      security:
+        - bearerAuth: []
+      responses:
+        "201":
+          description: Comment written successfully.
+      parameters:
+        - in: path
+          name: quote
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the quote
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  example: newcomment
