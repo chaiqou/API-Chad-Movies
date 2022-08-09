@@ -13,8 +13,6 @@ class AuthController extends Controller
 {
 	public function login(Request $request)
 	{
-		$user = User::where([['email', $request['email']], ['email_verified_at', '<>', null]])->firstOrFail();
-
 		$credentials = $request->only('email', 'password');
 
 		if (!$token = JWTAuth::attempt($credentials))
