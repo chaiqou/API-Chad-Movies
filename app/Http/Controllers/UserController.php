@@ -13,8 +13,8 @@ class UserController extends Controller
 	public function index(User $user, Request $request): UserResource
 	{
 		$id = auth()->user()->id;
-		$users = User::where('id', 'LIKE', '%' . $id . '%')->first();
-		return new UserResource($users);
+		$user = User::where('id', 'LIKE', '%' . $id . '%')->first();
+		return new UserResource($user);
 	}
 
 	public function update(Request $request): JsonResponse
