@@ -12,8 +12,7 @@ class UserController extends Controller
 {
 	public function index(User $user, Request $request): UserResource
 	{
-		$id = auth()->user()->id;
-		$user = User::where('id', 'LIKE', '%' . $id . '%')->first();
+		$user = auth()->user();
 		return new UserResource($user);
 	}
 
